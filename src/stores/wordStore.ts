@@ -5,21 +5,40 @@ import toast from "react-hot-toast";
 
 interface WordStore {
   words: Word[];
-  loading: boolean;
+  isAddingWords: boolean;
   existingWords: Word[];
   addWords: (words: Word[]) => Promise<void>;
   addWordsError: string;
+  searchForWordError: string;
+  searchForWord: (word: string) => Promise<void>;
+  isSearchingForWord: boolean;
 }
 
 export const useWordStore = create<WordStore>((set, get) => ({
   words: [],
-  loading: false,
+  isAddingWords: false,
   existingWords: [],
   addWordsError: "",
+  searchForWordError: "",
+  isSearchingForWord: false,
+
+  searchForWord: async (word: string) => {
+    try {
+      set({ isSearchingForWord: true });
+
+      const response = await axios.get(`/words/search?query=${word}`);
+      set({ words: response.data, searchForWordError: "" });
+    } catch (error: any | never) {
+      set({ searchForWordError: error.response?.data?.message || "Failed to search for words." });
+    } finally {
+      set({ isSearchingForWord: false });
+    }
+
+  },
 
   addWords: async (words: Word[]) => {
     try {
-      set({ loading: true });
+      set({ isAddingWords: true });
       const response = await axios.post("/words", words);
       toast.success("Words added successfully.");
       console.log("Words added successfully:", response.data);
@@ -27,7 +46,7 @@ export const useWordStore = create<WordStore>((set, get) => ({
       set({ existingWords: [] });
       set({ addWordsError: "" });
 
-    } catch (error: any) {
+    } catch (error: any | never) {
       set({ addWordsError: error.response?.data?.message || "Failed to add words." });
 
       if (error.response?.data?.existingWords) {
@@ -35,7 +54,7 @@ export const useWordStore = create<WordStore>((set, get) => ({
       }
 
     } finally {
-      set({ loading: false });
+      set({ isAddingWords: false });
     }
   }
 

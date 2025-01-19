@@ -5,7 +5,7 @@ import {useWordStore} from "@/stores/wordStore";
 
 const AddWords = () => {
 
-  const { addWords, existingWords, loading, addWordsError } = useWordStore();
+  const { addWords, existingWords, isAddingWords, addWordsError } = useWordStore();
 
   const [words, setWords] = useState<Word[]>([]);
 
@@ -48,7 +48,7 @@ const AddWords = () => {
         Add Word
       </button>
 
-      {!loading && <button
+      {!isAddingWords && <button
           className={`submit-btn ${words.length === 0 && "disabled"}`}
           onClick={submitAddWords}
           disabled={words.length === 0}
