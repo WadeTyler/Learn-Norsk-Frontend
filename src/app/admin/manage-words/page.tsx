@@ -1,8 +1,8 @@
 import React from 'react';
-import AddWords from "@/components/admin/AddWords";
-import WordSearch from "@/components/admin/WordSearch";
-import UpdateWord from "@/components/admin/UpdateWord";
-import DeleteWord from "@/components/admin/DeleteWord";
+import AddWords from "@/components/admin/words/AddWords";
+import WordSearch from "@/components/admin/words/WordSearch";
+import UpdateWord from "@/components/admin/words/UpdateWord";
+import DeleteWord from "@/components/admin/words/DeleteWord";
 
 const Page = () => {
   return (
