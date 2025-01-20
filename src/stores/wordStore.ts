@@ -12,15 +12,56 @@ interface WordStore {
   searchForWordError: string;
   searchForWord: (word: string) => Promise<void>;
   isSearchingForWord: boolean;
+
+  isUpdatingWord: boolean;
+  updateWordError: string;
+  updatedWord: Word | null;
+  updateWord: (id: number, updatedWord: Word) => Promise<void>;
+
+  isDeletingWord: boolean;
+  deleteWordError: string;
+  deleteWordSuccess: string;
+  deleteWord: (id: number) => Promise<void>;
+
+  isLoadingTotal: boolean;
+  total: number | null;
+  fetchTotal: () => Promise<void>;
 }
 
 export const useWordStore = create<WordStore>((set, get) => ({
+  // Variables
   words: [],
+
   isAddingWords: false,
   existingWords: [],
   addWordsError: "",
+
   searchForWordError: "",
   isSearchingForWord: false,
+
+  isUpdatingWord: false,
+  updateWordError: "",
+  updatedWord: null,
+
+  isDeletingWord: false,
+  deleteWordError: "",
+  deleteWordSuccess: "",
+
+  isLoadingTotal: false,
+  total: null,
+
+  // Functions
+
+  fetchTotal: async () => {
+    try {
+      set({ isLoadingTotal: true });
+      const response = await axios.get("/words/total");
+      set({ total: response.data, isLoadingTotal: false});
+    } catch (error) {
+      console.log("Error fetching total:", error.response.data);
+      set({ isLoadingTotal: false });
+    }
+  },
 
   searchForWord: async (word: string) => {
     try {
@@ -46,6 +87,9 @@ export const useWordStore = create<WordStore>((set, get) => ({
       set({ existingWords: [] });
       set({ addWordsError: "" });
 
+      // Refetch total
+      get().fetchTotal();
+
     } catch (error: any | never) {
       set({ addWordsError: error.response?.data?.message || "Failed to add words." });
 
@@ -55,6 +99,34 @@ export const useWordStore = create<WordStore>((set, get) => ({
 
     } finally {
       set({ isAddingWords: false });
+    }
+  },
+
+  updateWord: async (id: number, updatedWord: Word) => {
+    try {
+      console.log(id);
+      console.log(updatedWord);
+
+      set({ isUpdatingWord: true, updateWordError: "" });
+      const response = await axios.put(`/words/${id}`, updatedWord);
+      toast.success("Word updated successfully.");
+      set({ isUpdatingWord: false, updateWordError: "", updatedWord: response.data });
+
+    } catch (error) {
+      set({ isUpdatingWord: false, updateWordError: error.response?.data || "Failed to update word.", updatedWord: null });
+    }
+  },
+
+  deleteWord: async (id: number) => {
+    try {
+      set({ isDeletingWord: true, deleteWordError: "" });
+      await axios.delete(`/words/${id}`);
+      set({ isDeletingWord: false, deleteWordSuccess: `Word with id ${id} deleted successfully.` });
+
+      // Refetch total
+      get().fetchTotal();
+    } catch (error) {
+      set({ deleteWordSuccess: "", deleteWordError: error.response?.data || "Failed to delete word.", isDeletingWord: false });
     }
   }
 

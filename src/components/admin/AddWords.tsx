@@ -28,12 +28,12 @@ const AddWords = () => {
 
 
   return (
-    <div className={"w-[40rem] bg-white p-4 rounded shadow-xl text-zinc-800 flex flex-col items-center rounded gap-4"}>
+    <div className={"w-[40rem] bg-white p-4 rounded shadow-xl text-zinc-800 flex flex-col items-center gap-4"}>
       <h1 className="font-semibold text-xl">Add Words</h1>
 
       <hr className="w-full border" />
       
-      <div className="gap-4 w-full h-full" id={"add-words-container"}>
+      <div className="gap-4 w-full h-full flex flex-col items-center overflow-scroll" id={"add-words-container"}>
         {words.map((word: Word, index) => (
           <AddWordInputBar key={index} index={index}  words={words} setWords={setWords}/>
         ))}
