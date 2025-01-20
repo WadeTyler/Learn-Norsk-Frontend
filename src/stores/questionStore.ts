@@ -14,6 +14,12 @@ interface QuestionStore {
   ) => Promise<void>;
   newQuestion: Question | null;
 
+  total: number | null;
+  fetchTotal: () => Promise<void>;
+
+  isSearchingForQuestion: boolean;
+  questions: Question[];
+  searchForQuestion: (query: string) => Promise<void>;
 }
 
 export const useQuestionStore = create<QuestionStore>((set, get) => ({
@@ -22,7 +28,33 @@ export const useQuestionStore = create<QuestionStore>((set, get) => ({
   createQuestionError: "",
   newQuestion: null,
 
+  total: null,
+
+  isSearchingForQuestion: false,
+  questions: [],
+
   // Functions
+  searchForQuestion: async (query: string) => {
+    try {
+      set({ isSearchingForQuestion: true });
+      const response = await axios.get(`/questions/search?query=${query}`);
+      set({ questions: response.data, isSearchingForQuestion: false });
+    } catch (e) {
+      console.log(e.response.data || "Failed to search for questions.");
+      set({ questions: [], isSearchingForQuestion: false });
+    }
+  },
+
+  fetchTotal: async () => {
+    try {
+      const response = await axios.get("/questions/total");
+      set({ total: response.data });
+    } catch (e) {
+      console.log(e.response.data || "Failed to fetch total.");
+      set({ total: null });
+    }
+  },
+
   createQuestion: async (title, type, options, answer) => {
     try {
       set({ isCreatingQuestion: true, createQuestionError: "", newQuestion: null });
