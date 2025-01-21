@@ -29,7 +29,7 @@ const CreateQuestion = () => {
 
 
   return (
-    <div className={"w-[40rem] bg-white p-4 rounded shadow-xl text-zinc-800 flex flex-col items-center gap-4"}>
+    <div className={"bg-white p-4 rounded shadow-xl text-zinc-800 flex flex-col items-center gap-4"}>
       <h1 className="font-semibold text-xl">Create Question</h1>
 
       <hr className="w-full border"/>
@@ -131,12 +131,13 @@ const DisplayNewQuestion = ({newQuestion}: {newQuestion: Question}) => {
       <h3 className="font-semibold text-lg text-green-600">New Question Created</h3>
 
       <div className="flex items-center flex-col gap-1">
+        <p className="text-sm">Id: {newQuestion.id}</p>
         <p className="text-sm">Title: {newQuestion.title}</p>
         <p className="text-sm">Type: {newQuestion.type}</p>
+        <p className="text-sm">Options: {optionsStr}</p>
+        <p className="text-sm">Answer: {answerStr}</p>
       </div>
 
-      <p className="text-sm">Options: {optionsStr}</p>
-      <p className="text-sm">Answer: {answerStr}</p>
     </div>
   )
 }

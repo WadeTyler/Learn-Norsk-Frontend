@@ -8,10 +8,6 @@ const WordSearch = () => {
   const [userInput, setUserInput] = useState("");
 
   const handleSearch = () => {
-
-    if (userInput.length === 0) {
-      return;
-    }
     searchForWord(userInput);
   }
 
@@ -48,8 +44,8 @@ const WordSearch = () => {
         />
         <button
           onClick={handleSearch}
-          className={`submit-btn ${userInput.length === 0 && 'disabled'}`}
-          disabled={isSearchingForWord || userInput.length === 0}
+          className={`submit-btn`}
+          disabled={isSearchingForWord}
         >
           Search
         </button>

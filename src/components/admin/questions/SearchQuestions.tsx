@@ -23,7 +23,7 @@ const SearchQuestions = () => {
 
   return (
     <div
-      className={"w-[40rem] max-h-[40rem] bg-white p-4 rounded shadow-xl text-zinc-800 flex flex-col items-center gap-4"}>
+      className={"bg-white p-4 rounded shadow-xl text-zinc-800 flex flex-col items-center gap-4"}>
       <h1 className="font-semibold text-xl">Search for Question</h1>
       <hr className="w-full border"/>
 
@@ -36,7 +36,7 @@ const SearchQuestions = () => {
           onChange={(e) => setUserInput(e.target.value)}
         />
         <button
-          onClick={handleSearch}
+          disabled={isSearchingForQuestion}
           className={`submit-btn`}
         >
           Search

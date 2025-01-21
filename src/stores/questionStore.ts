@@ -20,6 +20,11 @@ interface QuestionStore {
   isSearchingForQuestion: boolean;
   questions: Question[];
   searchForQuestion: (query: string) => Promise<void>;
+
+  isDeletingQuestion: boolean;
+  deleteQuestionError: string;
+  deleteQuestionSuccess: string;
+  deleteQuestion: (id: number) => Promise<void>;
 }
 
 export const useQuestionStore = create<QuestionStore>((set, get) => ({
@@ -32,6 +37,10 @@ export const useQuestionStore = create<QuestionStore>((set, get) => ({
 
   isSearchingForQuestion: false,
   questions: [],
+
+  isDeletingQuestion: false,
+  deleteQuestionError: "",
+  deleteQuestionSuccess: "",
 
   // Functions
   searchForQuestion: async (query: string) => {
@@ -66,6 +75,16 @@ export const useQuestionStore = create<QuestionStore>((set, get) => ({
       set({ isCreatingQuestion: false, newQuestion: response.data });
     } catch (e) {
       set({ isCreatingQuestion: false, createQuestionError: e.response?.data || "Failed to create question." });
+    }
+  },
+
+  deleteQuestion: async (id) => {
+    try {
+      set({ isDeletingQuestion: true, deleteQuestionError: "", deleteQuestionSuccess: "" });
+      const response = await axios.delete(`/questions/${id}`);
+      set({ deleteQuestionSuccess: response.data || "Question Deleted.", isDeletingQuestion: false });
+    } catch (e) {
+      set({ isDeletingQuestion: false, deleteQuestionError: e.response?.data || "Failed to delete question.", deleteQuestionSuccess: "" });
     }
   }
 }))

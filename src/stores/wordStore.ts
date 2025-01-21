@@ -120,8 +120,8 @@ export const useWordStore = create<WordStore>((set, get) => ({
   deleteWord: async (id: number) => {
     try {
       set({ isDeletingWord: true, deleteWordError: "" });
-      await axios.delete(`/words/${id}`);
-      set({ isDeletingWord: false, deleteWordSuccess: `Word with id ${id} deleted successfully.` });
+      const response = await axios.delete(`/words/${id}`);
+      set({ isDeletingWord: false, deleteWordSuccess: response.data || "Word Deleted." });
 
       // Refetch total
       get().fetchTotal();
