@@ -23,7 +23,7 @@ const SearchQuestions = () => {
 
   return (
     <div
-      className={"bg-white p-4 rounded shadow-xl text-zinc-800 flex flex-col items-center gap-4"}>
+      className={"bg-white p-4 rounded shadow-xl text-zinc-800 flex flex-col items-center gap-4 max-h-[35rem]"}>
       <h1 className="font-semibold text-xl">Search for Question</h1>
       <hr className="w-full border"/>
 

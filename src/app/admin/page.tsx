@@ -15,6 +15,8 @@ const Page = () => {
       <h1>Admin Page</h1>
       <Link href={"/admin/manage-words"}>Manage Words</Link>
       <Link href={"/admin/manage-questions"}>Manage Questions</Link>
+      <Link href={"/admin/manage-lessons"}>Manage Lessons</Link>
+
     </div>
   );
 };

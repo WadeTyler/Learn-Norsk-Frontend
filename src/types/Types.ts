@@ -24,3 +24,11 @@ export interface User {
   role: string;
   createdAt: string;
 }
+
+export interface Lesson {
+  id: number;
+  lessonNumber: number;
+  experienceReward: number;
+  questions?: Question[];
+  createdAt: string;
+}
