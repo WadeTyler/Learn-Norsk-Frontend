@@ -34,3 +34,14 @@ export interface Lesson {
   questions?: Question[];
   createdAt: string;
 }
+
+export interface Section {
+  id: number;
+  title: string;
+  sectionNumber: number;
+  experienceReward: number;
+  createdAt: string;
+  lessons: Lesson[];
+}
+
+

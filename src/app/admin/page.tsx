@@ -16,7 +16,7 @@ const Page = () => {
       <Link href={"/admin/manage-words"}>Manage Words</Link>
       <Link href={"/admin/manage-questions"}>Manage Questions</Link>
       <Link href={"/admin/manage-lessons"}>Manage Lessons</Link>
-
+      <Link href={"/admin/manage-sections"}>Manage Sections</Link>
     </div>
   );
 };
