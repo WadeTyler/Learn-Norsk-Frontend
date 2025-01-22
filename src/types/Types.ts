@@ -12,3 +12,15 @@ export interface Question {
   options?: Word[];
   answer: Word[];
 }
+
+export interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password?: string;
+  level: number;
+  experience: number;
+  role: string;
+  createdAt: string;
+}

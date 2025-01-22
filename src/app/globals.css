@@ -7,6 +7,8 @@
 :root {
   --background: #f4f4f4;
   --foreground: #27272a;
+  --primary: #7f1d1d;
+  --accent: #60a5fa;
 }
 
 body {
@@ -20,9 +22,17 @@ body {
 }
 
 .input-bar {
-  @apply border border-zinc-400 rounded p-2 w-full;
+  @apply border border-zinc-400 rounded p-2 w-full focus:ring-primary focus:outline-primary focus:shadow-xl hover:shadow-xl duration-300 focus:font-semibold bg-transparent;
+}
+
+.input-label {
+  @apply text-primary font-bold text-xs;
 }
 
 .disabled {
   @apply cursor-not-allowed opacity-60;
+}
+
+.nav-link {
+  @apply duration-500 cursor-pointer hover:bg-accent hover:font-semibold px-2 py-1 rounded hover:shadow-xl;
 }
