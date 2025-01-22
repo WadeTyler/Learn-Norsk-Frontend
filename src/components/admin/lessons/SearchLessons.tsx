@@ -1,10 +1,10 @@
 'use client';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useLessonStore} from "@/stores/lessonStore";
 
 const SearchLessons = () => {
 
-  const { isSearchingLessons, lessons, searchLessons, searchLessonsById } = useLessonStore();
+  const { isSearchingLessons, lessons, searchLessons, searchLessonsById, total, isLoadingTotalLessons, fetchTotal } = useLessonStore();
 
   const [userInput, setUserInput] = useState<string>("");
 
@@ -20,9 +20,13 @@ const SearchLessons = () => {
     }
   }
 
+  useEffect(() => {
+    fetchTotal();
+  }, [fetchTotal]);
+
   return (
     <div
-      className={"w-[35rem] max-h-[35rem] bg-white p-4 rounded shadow-xl text-zinc-800 flex flex-col items-center gap-4"}>
+      className={"w-[35rem] max-h-[60rem] bg-white p-4 rounded shadow-xl text-zinc-800 flex flex-col items-center gap-4"}>
       <h1 className="font-semibold text-xl">Search for Lesson</h1>
       <hr className="w-full border"/>
 
@@ -44,6 +48,14 @@ const SearchLessons = () => {
 
       <hr className="w-full border"/>
 
+      {total &&
+          <>
+              <p className="font-semibold text-lg">Total Lessons: {total}</p>
+              <hr className="w-full border"/>
+
+          </>
+      }
+
       {lessons &&
         <div className="flex flex-col gap-2 overflow-scroll">
           {lessons.map((lesson) => (
@@ -53,6 +65,8 @@ const SearchLessons = () => {
                   <p>#: {lesson.lessonNumber},</p>
                   <p>EXP: {lesson.experienceReward}</p>
                 </div>
+                <p>Title: {lesson.title}</p>
+                <p>Desc: {lesson.description}</p>
                 <div className="flex flex-col gap-1">
                   {lesson.questions?.map((question) => (
                     <div key={question.id} className={"w-full border flex gap-1 items-center p-2 rounded"}>

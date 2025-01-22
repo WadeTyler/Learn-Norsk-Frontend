@@ -27,6 +27,8 @@ export interface User {
 
 export interface Lesson {
   id: number;
+  title: string;
+  description: string;
   lessonNumber: number;
   experienceReward: number;
   questions?: Question[];

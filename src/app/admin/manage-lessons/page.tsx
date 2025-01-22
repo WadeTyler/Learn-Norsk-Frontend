@@ -8,11 +8,13 @@ const Page = () => {
   return (
     <div className="w-full min-h-screen flex flex-col items-center gap-4 p-16 pt-32">
       <h1 className="font-semibold text-2xl">Manage Lessons</h1>
-      <div className="w-full flex gap-16 justify-center flex-wrap">
+      <div className="w-full flex gap-8 justify-center flex-wrap">
         <SearchLessons />
         <CreateLesson />
-        <SearchQuestions />
-        <DeleteLesson />
+        <div className="flex flex-col gap-8 ">
+          <SearchQuestions />
+          <DeleteLesson />
+        </div>
       </div>
     </div>
   );

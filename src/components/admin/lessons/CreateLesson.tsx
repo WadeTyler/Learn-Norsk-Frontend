@@ -9,6 +9,8 @@ const CreateLesson = () => {
 
   const {createLesson, newLesson, isCreatingLesson, createLessonError} = useLessonStore();
 
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [lessonNumber, setLessonNumber] = useState<number>(0);
   const [experienceReward, setExperienceReward] = useState<number>(0);
   const [questionIdsStr, setQuestionIdsStr] = useState<string>("");
@@ -20,20 +22,43 @@ const CreateLesson = () => {
     const questionIds = questionIdsStr.trim().split(",").map(id => parseInt(id));
 
     // Check if any field is empty
-    if (lessonNumber === 0 || experienceReward === 0 || questionIds.length === 0) {
+    if (!title || !description || lessonNumber === 0 || experienceReward === 0 || questionIds.length === 0) {
       return toast.error("Please fill out all fields.");
     }
-    createLesson(lessonNumber, experienceReward, questionIds);
+    createLesson(title, description, lessonNumber, experienceReward, questionIds);
   }
 
-  const { isCheckingAdmin } = useAdminProtected();
-  if (isCheckingAdmin) return <LoadingLG />;
+  const {isCheckingAdmin} = useAdminProtected();
+  if (isCheckingAdmin) return <LoadingLG/>;
 
   return (
-    <div className="bg-white w-96 flex flex-col items-center p-4 rounded shadow-xl gap-4 overflow-scroll max-h-[35rem]">
+    <div className="bg-white w-96 flex flex-col items-center p-4 rounded shadow-xl gap-4 overflow-scroll max-h-[60rem]">
       <h1 className="text-lg font-semibold">Create Lesson</h1>
 
       <form className="w-full flex flex-col gap-2" onSubmit={(e) => handleCreateLesson(e)}>
+
+
+        <div>
+          <label className="input-label">TITLE:</label>
+          <input
+            type="text"
+            className="input-bar"
+            value={title}
+            placeholder={"Enter Lesson Title"}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+
+
+        <div>
+          <label className="input-label">DESCRIPTION:</label>
+          <textarea
+            className="input-bar resize-none h-32"
+            value={description}
+            placeholder={"Enter Lesson Description"}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
 
         <div className="w-full flex gap-2">
           <div>
@@ -81,12 +106,14 @@ const CreateLesson = () => {
       }
 
       {newLesson &&
-          <div className={"overflow-scroll"}>
+          <div className={"overflow-scroll text-sm"}>
               <hr className="w-full border"/>
               <p className="text-green-500 font-semibold">Lesson created successfully!</p>
-              <p className="text-sm">Lesson Id: {newLesson.id}</p>
-              <p className="text-sm">Lesson Number: {newLesson.lessonNumber}</p>
-              <p className="text-sm">Experience Reward: {newLesson.experienceReward}</p>
+              <p>Lesson Id: {newLesson.id}</p>
+              <p>Title: {newLesson.title}</p>
+              <p>Desc: {newLesson.description}</p>
+              <p>Lesson Number: {newLesson.lessonNumber}</p>
+              <p>Experience Reward: {newLesson.experienceReward}</p>
             {newLesson.questions?.map((question) => (
               <div key={question.id} className="w-full border rounded flex gap-2 items-center text-sm p-2">
                 <p>QID: {question.id}</p>
