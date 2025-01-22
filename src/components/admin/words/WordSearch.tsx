@@ -37,7 +37,7 @@ const WordSearch = () => {
       <form className="input-bar flex items-center" onSubmit={handleSearch}>
         <input
           type="text"
-          className="w-full focus:outline-none"
+          className=" bg-transparent w-full focus:outline-none"
           placeholder="Search by English or Norsk"
           disabled={isSearchingForWord}
           onChange={(e) => setUserInput(e.target.value)}

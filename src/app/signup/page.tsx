@@ -1,9 +1,12 @@
 'use client';
 import React, {useState} from 'react';
-import {LoadingSM} from "@/components/util/Loading";
+import {LoadingLG, LoadingSM} from "@/components/util/Loading";
 import {useUserStore} from "@/stores/userStore";
+import {useUnprotected} from "@/hooks/useUnprotected";
 
 const Page = () => {
+
+  const { isCheckingProtection } = useUnprotected();
 
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -19,7 +22,10 @@ const Page = () => {
     signup(firstName, lastName, email, password, confirmPassword);
   }
 
-  return (
+
+  if (isCheckingProtection) return <LoadingLG/>;
+
+  else return (
     <div className="w-full h-screen bg-background flex items-center justify-center">
       <div className="w-96 bg-white p-4 shadow-xl rounded flex flex-col gap-2">
         <h1 className="text-xl text-primary font-semibold text-center">Welcome Back</h1>

@@ -16,13 +16,16 @@ body {
   background: var(--background);
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
+input {
+  @apply bg-transparent;
+}
 
 .submit-btn {
   @apply bg-green-600 hover:bg-green-500 px-2 py-1 rounded text-white shadow-xl duration-300 cursor-pointer;
 }
 
 .input-bar {
-  @apply border border-zinc-400 rounded p-2 w-full focus:ring-primary focus:outline-primary focus:shadow-xl hover:shadow-xl duration-300 focus:font-semibold bg-transparent;
+  @apply border border-zinc-400 rounded p-2 w-full focus:ring-primary bg-transparent focus:outline-primary focus:shadow-xl hover:shadow-xl duration-300 focus:font-semibold ;
 }
 
 .input-label {
@@ -35,4 +38,8 @@ body {
 
 .nav-link {
   @apply duration-500 cursor-pointer hover:bg-accent hover:font-semibold px-2 py-1 rounded hover:shadow-xl;
+}
+
+.dropdown-btn {
+  @apply w-full text-primary inline-flex gap-2 hover:bg-primary hover:text-background rounded p-1 hover:shadow-xl duration-300 cursor-pointer;
 }

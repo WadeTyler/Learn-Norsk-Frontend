@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import {useUserStore} from "@/stores/userStore";
 import {User} from "@/types/Types";
+import {IconLockFilled} from "@tabler/icons-react";
+import UserIcon from "@/components/navbar/UserIcon";
 
 const Navbar = () => {
 
@@ -70,6 +72,12 @@ const DesktopNavbar = ({user}: {
           <>
             <Link href={"/login"} className={"text-background nav-link"}>Login</Link>
             <Link href={"/signup"} className={"nav-link bg-background hover:bg-accent text-primary hover:text-background"}>Sign Up</Link>
+          </>
+        )}
+        {user && (
+          <>
+            {user.role === "admin" && <Link href={"/admin"} className={"nav-link bg-background hover:bg-accent text-primary hover:text-background inline-flex"}><IconLockFilled /> Dashboard</Link>}
+            <UserIcon />
           </>
         )}
       </div>

@@ -1,11 +1,13 @@
 'use client';
 import React, { useState} from 'react';
 import {useUserStore} from "@/stores/userStore";
-import {LoadingSM} from "@/components/util/Loading";
+import {LoadingLG, LoadingSM} from "@/components/util/Loading";
+import {useUnprotected} from "@/hooks/useUnprotected";
 
 const Page = () => {
+  const { isCheckingProtection } = useUnprotected();
 
-  const { user, isLoggingIn, loginError, login } = useUserStore();
+  const { isLoggingIn, loginError, login } = useUserStore();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -15,6 +17,8 @@ const Page = () => {
     if (!email || !password || isLoggingIn) return;
     await login(email, password);
   }
+
+  if (isCheckingProtection) return <LoadingLG />;
 
   return (
     <div className="w-full h-screen bg-background flex items-center justify-center">

@@ -13,9 +13,12 @@ interface UserStore {
   signup: (firstName: string, lastName: string, email: string, password: string, confirmPassword: string) => Promise<void>;
   isSigningUp: boolean;
   signupError: string;
+  logout: () => Promise<void>;
+  isLoggingOut: boolean
 }
 
 export const useUserStore = create<UserStore>((set, get) => ({
+  // Load User
   user: null,
   isLoadingUser: false,
   fetchUser: async () => {
@@ -30,6 +33,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
     }
   },
 
+  // Login
   isLoggingIn: false,
   loginError: "",
   login: async (email, password) => {
@@ -42,6 +46,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
     }
   },
 
+  // Signup
   isSigningUp: false,
   signupError: "",
   signup: async (firstName, lastName, email, password, confirmPassword) => {
@@ -51,6 +56,19 @@ export const useUserStore = create<UserStore>((set, get) => ({
       set({ user: response.data, isSigningUp: false });
     } catch (e) {
       set({ signupError: e.response?.data || "Failed to signup.", isSigningUp: false, user: null });
+    }
+  },
+
+  // Logout
+  isLoggingOut: false,
+  logout: async () => {
+    try {
+      set({ isLoggingOut: true });
+      await axios.delete("/auth/logout");
+      set({ user: null, isLoggingOut: false });
+    } catch (e) {
+      set({ isLoggingOut: false });
+      toast.error(e.response?.data || "Something went wrong");
     }
   }
 
