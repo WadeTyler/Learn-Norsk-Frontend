@@ -3,7 +3,7 @@ import React, {SetStateAction, useEffect, useState} from 'react';
 import {Word} from "@/types/Types";
 import {useWordStore} from "@/stores/wordStore";
 
-const AddWords = () => {
+const CreateWords = () => {
 
   const { addWords, existingWords, isAddingWords, addWordsError } = useWordStore();
 
@@ -69,7 +69,7 @@ const AddWords = () => {
   );
 };
 
-export default AddWords;
+export default CreateWords;
 
 const AddWordInputBar= ({words, index, setWords}: {
   words: Word[];

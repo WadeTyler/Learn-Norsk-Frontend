@@ -25,7 +25,7 @@ const CreateSection = () => {
 
   return (
     <div className="bg-white w-96 flex flex-col items-center p-4 rounded shadow-xl gap-4 overflow-scroll max-h-[60rem]">
-      <h1 className="text-lg font-semibold">Create Lesson</h1>
+      <h1 className="text-lg font-semibold">Create Section</h1>
 
       <form className="w-full flex flex-col gap-2" onSubmit={(e) => handleCreateSection(e)}>
         <div>

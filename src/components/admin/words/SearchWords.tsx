@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import {useWordStore} from "@/stores/wordStore";
 
-const WordSearch = () => {
+const SearchWords = () => {
 
   const { total, fetchTotal, isLoadingTotal, searchForWord, isSearchingForWord, words, searchForWordError } = useWordStore();
   const [userInput, setUserInput] = useState("");
@@ -70,4 +70,4 @@ const WordSearch = () => {
   );
 };
 
-export default WordSearch;
+export default SearchWords;

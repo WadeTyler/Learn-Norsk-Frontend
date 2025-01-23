@@ -46,7 +46,7 @@ const SearchSections = () => {
 
       <hr className="w-full border"/>
 
-      {total &&
+      {total !== null &&
           <>
               <p className="font-semibold text-lg">Total Sections: {total}</p>
               <hr className="w-full border"/>

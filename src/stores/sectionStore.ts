@@ -3,6 +3,7 @@ import axios from "@/lib/axios";
 import {Section} from "@/types/Types";
 
 interface SectionStore {
+
   total: null | number;
   fetchTotal: () => Promise<void>;
 
@@ -15,11 +16,15 @@ interface SectionStore {
   isCreatingSection: boolean;
   createSectionError: string;
   createSection: (title: string, sectionNumber: number, experienceReward: number, lessonIds: number[]) => Promise<void>;
+
+  isDeletingSection: boolean;
+  deleteSectionSuccess: string;
+  deleteSectionError: string;
+  deleteSection: (id: number) => Promise<void>;
+
 }
 
-
 export const useSectionStore = create<SectionStore>((set, get) => ({
-
   sections: [],
 
   total: null,
@@ -67,6 +72,21 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
     } catch (e) {
       set({ createSectionError: e.response?.data || "Failed to create section", isCreatingSection: false });
     }
-  }
+  },
+
+  isDeletingSection: false,
+  deleteSectionError: "",
+  deleteSectionSuccess: "",
+
+  deleteSection: async (id) => {
+    try {
+      set({ isDeletingSection: true, deleteSectionError: "", deleteSectionSuccess: "" });
+      const response = await axios.delete(`/sections/${id}`);
+      set({ deleteSectionSuccess: response.data, isDeletingSection: false });
+      get().fetchTotal();
+    } catch (e) {
+      set({ deleteSectionError: e.response?.data || "Failed to delete section", isDeletingSection: false });
+    }
+}
 
 }))
