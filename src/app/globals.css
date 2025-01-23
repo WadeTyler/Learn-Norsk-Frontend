@@ -9,6 +9,8 @@
   --foreground: #27272a;
   --primary: #7f1d1d;
   --accent: #60a5fa;
+  --accentLight: #8ebcf5;
+  --accentDark: #4680c7;
 }
 
 body {
@@ -21,7 +23,7 @@ input {
 }
 
 .submit-btn {
-  @apply bg-green-600 hover:bg-green-500 px-2 py-1 rounded text-white shadow-xl duration-300 cursor-pointer;
+  @apply bg-accent hover:bg-accentDark px-2 py-1 rounded text-white shadow-xl duration-300 cursor-pointer;
 }
 
 .input-bar {
