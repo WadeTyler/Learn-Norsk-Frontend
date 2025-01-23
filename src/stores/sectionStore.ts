@@ -1,6 +1,6 @@
 import {create} from "zustand";
 import axios from "@/lib/axios";
-import {Section} from "@/types/Types";
+import {Question, Section} from "@/types/Types";
 
 interface SectionStore {
 
@@ -22,6 +22,13 @@ interface SectionStore {
   deleteSectionError: string;
   deleteSection: (id: number) => Promise<void>;
 
+  questions: Question[];
+  isLoadingQuestions: boolean;
+  fetchQuestionsError: string;
+  setFetchQuestionsError: (message: string) => void;
+  fetchQuestions: (sectionId: number, lessonId: number) => Promise<void>;
+
+  handleIncorrectQuestion: (question: Question) => void;
 }
 
 export const useSectionStore = create<SectionStore>((set, get) => ({
@@ -50,12 +57,13 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
 
   getAllSections: async () => {
     try {
+      set({ isSearchingSections: true });
       const response = await axios.get("/sections");
       console.log(response.data);
-      set({ sections: response.data });
+      set({ sections: response.data, isSearchingSections: false });
     } catch (e) {
       console.log(e.response?.data || "Failed to get all sections");
-      set({ sections: [] });
+      set({ sections: [], isSearchingSections: false });
     }
   },
 
@@ -87,6 +95,29 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
     } catch (e) {
       set({ deleteSectionError: e.response?.data || "Failed to delete section", isDeletingSection: false });
     }
-}
+},
+
+  questions: [],
+  isLoadingQuestions: true,
+  fetchQuestionsError: "",
+  setFetchQuestionsError: (message) => {
+    set({ fetchQuestionsError: message, isLoadingQuestions: false });
+  },
+  fetchQuestions: async (sectionId, lessonId) => {
+    try {
+      set({ questions: [], isLoadingQuestions: true, fetchQuestionsError: "" });
+      const response = await axios.get(`/sections/${sectionId}/lessons/${lessonId}/questions`);
+      set({ questions: response.data, isLoadingQuestions: false });
+      console.log(response.data);
+    } catch (e) {
+      set({ fetchQuestionsError: e.response?.data || "Failed to load questions.", isLoadingQuestions: false });
+    }
+  },
+
+  handleIncorrectQuestion: (question) => {
+    const newQuestions = get().questions.filter(q => q.id !== question.id);
+    newQuestions.push(question);
+    set({ questions: newQuestions });
+  }
 
 }))

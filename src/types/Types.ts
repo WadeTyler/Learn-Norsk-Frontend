@@ -44,4 +44,8 @@ export interface Section {
   lessons: Lesson[];
 }
 
+export interface UserAnswer {
+  questionId: number;
+  answer: Word[];
+}
 

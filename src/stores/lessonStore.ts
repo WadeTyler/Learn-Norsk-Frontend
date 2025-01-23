@@ -1,6 +1,7 @@
 import {create} from "zustand";
 import axios from "@/lib/axios";
-import {Lesson} from "@/types/Types";
+import {Lesson, UserAnswer} from "@/types/Types";
+import toast from "react-hot-toast";
 
 interface LessonStore {
   isCreatingLesson: boolean;
@@ -18,6 +19,17 @@ interface LessonStore {
   isLoadingTotalLessons: boolean;
   total: number | null;
   fetchTotal: () => Promise<void>;
+
+  userAnswers: UserAnswer[];
+  addToUserAnswers: (userAnswer: UserAnswer) => Promise<void>;
+  resetUserAnswers: () => void;
+  isCheckingAnswers: boolean;
+  checkAnswers: (lessonId: number) => Promise<boolean>;
+
+  completedLessons: number[];
+  isLoadingCompletedLessons: boolean;
+  loadCompletedLessonsError: string;
+  fetchCompletedLessons: () => Promise<void>;
 };
 
 export const useLessonStore = create<LessonStore>((set, get) => ({
@@ -87,6 +99,44 @@ export const useLessonStore = create<LessonStore>((set, get) => ({
       console.log(e.response?.data || "Failed to fetch total lessons.");
       set({ total: null, isLoadingTotalLessons: false })
     }
-  }
+  },
+
+  userAnswers: [],
+  addToUserAnswers: async (userAnswer) => {
+    const newUserAnswers = get().userAnswers;
+    newUserAnswers.push(userAnswer);
+    set({ userAnswers: newUserAnswers });
+  },
+  resetUserAnswers: () => {
+    set({ userAnswers: [] });
+  },
+
+  isCheckingAnswers: false,
+  checkAnswers: async (lessonId) => {
+    try {
+      set({ isCheckingAnswers: true });
+      const response = await axios.post(`/lessons/${lessonId}/check-answers`, get().userAnswers);
+      set({ isCheckingAnswers: false });
+      console.log(response.data);
+      return true;
+    } catch (e) {
+      set({ isCheckingAnswers: false });
+      console.log(e.response?.data || "Failed to check answers.");
+      return false;
+    }
+  },
+
+  completedLessons: [],
+  isLoadingCompletedLessons: false,
+  loadCompletedLessonsError: "",
+  fetchCompletedLessons: async () => {
+    try {
+      set({ isLoadingCompletedLessons: true, loadCompletedLessonsError: "" });
+      const response = await axios.get("/lessons/completed");
+      set({ completedLessons: response.data, isLoadingCompletedLessons: false });
+    } catch (e) {
+      set({ isLoadingCompletedLessons: false, loadCompletedLessonsError: e.response.data || "Failed to load completed lessons" });
+    }
+  },
 
 }))
