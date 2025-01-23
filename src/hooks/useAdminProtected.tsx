@@ -10,7 +10,7 @@ export function useAdminProtected(redirectTo = "/login") {
 
   useEffect(() => {
     setIsCheckingAdmin(true);
-    if(!isLoadingUser) {
+    if (!isLoadingUser) {
       if (!user || user.role  !== "admin") {
         router.push(redirectTo);
       } else {
