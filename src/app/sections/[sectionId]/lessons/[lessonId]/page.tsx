@@ -55,14 +55,14 @@ const Page = () => {
 
     // Check if at last question
     if (currentQuestion === questions.length - 1) {
-      if (lessonIdNum) {
+      if (lessonIdNum && sectionIdNum) {
         // Check answers
-        const answersValid = await checkAnswers(lessonIdNum);
+        const answersValid = await checkAnswers(sectionIdNum, lessonIdNum);
 
         // Correct answers,
         if (answersValid) {
           toast.success("Lesson Complete");
-          router.push("/learn");
+          router.push(`/learn?sectionId=${sectionIdNum}`);
           return;
         }
       } else {

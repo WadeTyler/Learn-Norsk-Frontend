@@ -49,3 +49,9 @@ export interface UserAnswer {
   answer: Word[];
 }
 
+export interface CompletedLesson {
+  id?: number;
+  userId?: number;
+  sectionId: number;
+  lessonId: number;
+}

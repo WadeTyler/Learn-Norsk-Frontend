@@ -7,25 +7,54 @@ import {getRandomAffirmation} from "@/constants/messages";
 import SectionPanel from "@/components/learn/SectionPanel";
 import LoadingScreen from "@/components/util/LoadingScreen";
 import {useLessonStore} from "@/stores/lessonStore";
+import {useSearchParams} from "next/navigation";
 
 const Page = () => {
 
+  // Protection
   const {isCheckingProtection} = useProtected();
 
+  // Store data
   const {sections, getAllSections, isSearchingSections} = useSectionStore();
   const {fetchCompletedLessons, isLoadingCompletedLessons, loadCompletedLessonsError} = useLessonStore();
   const {user} = useUserStore();
 
+  // Navigation
+  const searchParams = useSearchParams();
+
+  // States
   const [currentSection, setCurrentSection] = useState<number | null>(null);
   const [affirmation] = useState<string>(getRandomAffirmation());
 
-  // Get all sectiosn on load
+  // Get all sections on load
   useEffect(() => {
     getAllSections();
     fetchCompletedLessons();
   }, [getAllSections, fetchCompletedLessons]);
 
-  // Check protection
+  useEffect(() => {
+
+    if (sections) {
+      const sectionIdStr = searchParams.get("sectionId");
+      if (typeof sectionIdStr === "string") {
+        setCurrentSection(parseInt(sectionIdStr));
+        scrollToSection(parseInt(sectionIdStr));
+      }
+    }
+
+  }, [sections]);
+
+
+  function scrollToSection(sectionId: number) {
+    const sectionElement = document.getElementById(`section-${sectionId}`);
+
+    if (sectionElement) {
+      // Scroll so the section is in the middle of the screen
+      sectionElement.scrollIntoView({behavior: "smooth", block: "center"});
+    }
+  }
+
+  // Check Loading fields
   if (isCheckingProtection || isLoadingCompletedLessons || isSearchingSections) return <LoadingScreen/>
 
   return (

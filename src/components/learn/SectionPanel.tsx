@@ -41,6 +41,7 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
       <AnimatePresence initial={false}>
         {currentSection === section.id && (
           <motion.div
+            id={`section-${section.id}`}
             initial={{height: 0, opacity: 0}}
             animate={{height: 'auto', opacity: 1}}
             exit={{height: 0}}
@@ -50,13 +51,20 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
             <div className="flex flex-col gap-2 w-full">
               {section.lessons.map((lesson) => {
 
-                const isCompleted = completedLessons.includes(lesson.id);
+                function getIsCompleted() {
+                  return completedLessons.some((completedLesson) => {
+                    return completedLesson.sectionId === section.id && completedLesson.lessonId === lesson.id;
+                  });
+                }
+
+                const isCompleted = getIsCompleted();
 
                 return (
                   <Link
                     href={`/sections/${section.id}/lessons/${lesson.id}`}
                     className={`w-full flex flex-col gap-1 border-b p-2 last-of-type:border-none group cursor-pointer hover:text-accent`}
                     key={lesson.id}
+                    id={`lesson-${lesson.id}`}
                   >
                     <div className="w-full flex items-center justify-between">
                       <p className="text-primary group-hover:text-accent duration-300">

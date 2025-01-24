@@ -1,6 +1,6 @@
 import {create} from "zustand";
 import axios from "@/lib/axios";
-import {Lesson, UserAnswer} from "@/types/Types";
+import {CompletedLesson, Lesson, UserAnswer} from "@/types/Types";
 import toast from "react-hot-toast";
 
 interface LessonStore {
@@ -24,9 +24,9 @@ interface LessonStore {
   addToUserAnswers: (userAnswer: UserAnswer) => Promise<void>;
   resetUserAnswers: () => void;
   isCheckingAnswers: boolean;
-  checkAnswers: (lessonId: number) => Promise<boolean>;
+  checkAnswers: (sectionId: number, lessonId: number) => Promise<boolean>;
 
-  completedLessons: number[];
+  completedLessons: CompletedLesson[];
   isLoadingCompletedLessons: boolean;
   loadCompletedLessonsError: string;
   fetchCompletedLessons: () => Promise<void>;
@@ -112,10 +112,10 @@ export const useLessonStore = create<LessonStore>((set, get) => ({
   },
 
   isCheckingAnswers: false,
-  checkAnswers: async (lessonId) => {
+  checkAnswers: async (sectionId, lessonId) => {
     try {
       set({ isCheckingAnswers: true });
-      const response = await axios.post(`/lessons/${lessonId}/check-answers`, get().userAnswers);
+      const response = await axios.post(`/sections/${sectionId}/lessons/${lessonId}/check-answers`, get().userAnswers);
       set({ isCheckingAnswers: false });
       console.log(response.data);
       return true;
