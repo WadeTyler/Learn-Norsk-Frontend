@@ -16,6 +16,8 @@ const ImageChoiceQuestion = ({question, nextQuestion}: {
   const correctAnswer = question.answer[0];
 
   const checkAnswer = (word: Word) => {
+    if (answered) return;
+
     setSelectedAnswer([word]);
     if (word.id === correctAnswer.id) {
       setIsCorrect(true);
@@ -29,15 +31,16 @@ const ImageChoiceQuestion = ({question, nextQuestion}: {
   const handleGoNext = () => {
 
     if (isCorrect && !isIncorrect) {
-      setIsCorrect(false);
       nextQuestion(true, selectedAnswer);
     }
     else if (!isCorrect && isIncorrect) {
-      setIsIncorrect(false);
-      setIsCorrect(false);
       nextQuestion(false, selectedAnswer);
     }
 
+    setIsIncorrect(false);
+    setIsCorrect(false);
+    setAnswered(false);
+    setSelectedAnswer([]);
     setSelectedAnswer([]);
   }
 

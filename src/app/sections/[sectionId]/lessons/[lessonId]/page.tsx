@@ -12,6 +12,7 @@ import {useLessonStore} from "@/stores/lessonStore";
 import toast from "react-hot-toast";
 import {IconArrowNarrowLeftDashed} from "@tabler/icons-react";
 import ImageChoiceQuestion from "@/components/ImageChoiceQuestion";
+import SentenceTypeQuestion from "@/components/SentenceTypeQuestion";
 
 const Page = () => {
 
@@ -130,6 +131,10 @@ const Page = () => {
 
           {questions[currentQuestion].type === "image-choice" &&
             <ImageChoiceQuestion question={questions[currentQuestion]} nextQuestion={nextQuestion} />
+          }
+
+          {questions[currentQuestion].type === "sentence-typing" &&
+            <SentenceTypeQuestion question={questions[currentQuestion]} nextQuestion={nextQuestion} />
           }
 
         </AnimatePresence>

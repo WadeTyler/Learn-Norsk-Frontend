@@ -47,15 +47,15 @@ const SentenceFormingQuestion = ({question, nextQuestion}: {
 
   const handleGoNext = () => {
     if (isCorrect && !isIncorrect) {
-      setIsCorrect(false);
       nextQuestion(true, selectedAnswer);
     }
     else if (!isCorrect && isIncorrect) {
-      setIsIncorrect(false);
-      setIsCorrect(false);
       nextQuestion(false, selectedAnswer);
     }
 
+    setIsIncorrect(false);
+    setIsCorrect(false);
+    setSelectedAnswer([]);
     setSelectedAnswer([]);
   }
 
