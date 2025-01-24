@@ -13,18 +13,25 @@ import toast from "react-hot-toast";
 import {IconArrowNarrowLeftDashed} from "@tabler/icons-react";
 import ImageChoiceQuestion from "@/components/ImageChoiceQuestion";
 import SentenceTypeQuestion from "@/components/SentenceTypeQuestion";
+import {getRandomAffirmation, getRandomMistakeAffirmation} from "@/constants/messages";
 
 const Page = () => {
 
+  // Protection
   const { isCheckingProtection } = useProtected();
 
+  // States
   const { sectionId, lessonId } = useParams();
   const [sectionIdNum] = useState<number | null>(typeof sectionId === "string" ? parseInt(sectionId) : null);
   const [lessonIdNum] = useState<number | null>(typeof lessonId === "string" ? parseInt(lessonId) : null);
-
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
+  const [questionsSinceAffirmation, setQuestionsSinceAffirmation] = useState<number>(0);
+  const [questionsSinceCorrect, setQuestionsSinceCorrect] = useState<number>(0);
+
+  // Nav
   const router = useRouter();
 
+  // Stores
   const { questions, isLoadingQuestions, fetchQuestions, fetchQuestionsError, setFetchQuestionsError, handleIncorrectQuestion } = useSectionStore();
   const { isCheckingAnswers, checkAnswers, resetUserAnswers, addToUserAnswers } = useLessonStore();
 
@@ -39,18 +46,25 @@ const Page = () => {
       }
     }
 
-    handleLoadQuestions();
+    handleLoadQuestions()
 
   }, [fetchQuestions, sectionId, lessonId]);
 
 
   const nextQuestion = async (isCorrect: boolean, answer: Word[]) => {
+
+
     // This condition check is important, because if the question is incorrect we just want to move it to the end of the stack
     // If we do that, the index will stay the same, so we don't have to increment the currentQuestion.
     if (!isCorrect) {
       handleIncorrectQuestion(questions[currentQuestion]);
+      setQuestionsSinceCorrect(prev => prev += 1);
+      setQuestionsSinceAffirmation(prev => prev + 1);
       return;
     }
+
+    // Question is correct!
+    setQuestionsSinceCorrect(0);
 
     // add answer to the userAnswers array
     const newUserAnswer = { questionId: questions[currentQuestion].id, answer: answer };
@@ -64,7 +78,7 @@ const Page = () => {
 
         // Correct answers,
         if (answersValid) {
-          toast.success("Lesson Complete");
+          toast.success("Lesson Complete! Good Job! 👍");
           router.push(`/learn?sectionId=${sectionIdNum}`);
           return;
         }
@@ -78,6 +92,7 @@ const Page = () => {
     else {
       setCurrentQuestion(prev => prev + 1);
     }
+    setQuestionsSinceAffirmation(prev => prev + 1);
   }
 
   const goBackToLearnPage = () => {
@@ -88,6 +103,29 @@ const Page = () => {
     }
   }
 
+  // Show an affirmation every 3 questions correct, or every 3 questions wrong in a row
+  useEffect(() => {
+
+    // If it's been 3+ questions since aff
+    if (questionsSinceAffirmation >= 3) {
+
+      // If we haven't gotten a question correct in 3+ tries
+      if (questionsSinceCorrect >= 3) {
+        toast(getRandomMistakeAffirmation(), {
+          removeDelay: 4000,
+        });
+      }
+      // Show regular aff instead
+      else {
+        toast(getRandomAffirmation(), {
+          removeDelay: 4000,
+        });
+      }
+      // Reset aff counter
+      setQuestionsSinceAffirmation(0);
+    }
+
+  }, [questionsSinceAffirmation, questionsSinceCorrect]);
 
   // Conditional Returns
   if (isCheckingProtection || isLoadingQuestions || isCheckingAnswers) return <LoadingScreen />
