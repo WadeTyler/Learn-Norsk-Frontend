@@ -10,6 +10,7 @@ import SentenceFormingQuestion from "@/components/SentenceFormingQuestion";
 import  {Word} from "@/types/Types";
 import {useLessonStore} from "@/stores/lessonStore";
 import toast from "react-hot-toast";
+import {IconArrowNarrowLeftDashed} from "@tabler/icons-react";
 
 const Page = () => {
 
@@ -77,6 +78,14 @@ const Page = () => {
     }
   }
 
+  const goBackToLearnPage = () => {
+    if (sectionIdNum) {
+      router.push(`/learn?sectionId=${sectionIdNum}`);
+    } else {
+      router.push("/learn");
+    }
+  }
+
 
   // Conditional Returns
   if (isCheckingProtection || isLoadingQuestions || isCheckingAnswers) return <LoadingScreen />
@@ -86,6 +95,14 @@ const Page = () => {
   return (
     <div className="w-full h-screen pt-16 flex items-center justify-center flex-col">
 
+      <div className="w-[40rem]">
+        <button
+          onClick={goBackToLearnPage}
+          className="inline-flex items-center gap-1 text-lg text-accentLight hover:text-white hover:bg-accent p-1 duration-300 rounded hover:shadow-xl select-none"
+        >
+          <IconArrowNarrowLeftDashed/> Go Back
+        </button>
+      </div>
       {/* Progress Bar */}
       <div className="w-[40rem] rounded-full bg-white h-6 my-4 shadow-xl overflow-hidden">
         <div

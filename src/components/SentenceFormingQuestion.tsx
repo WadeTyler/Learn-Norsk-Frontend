@@ -111,7 +111,7 @@ const SentenceFormingQuestion = ({question, nextQuestion}: {
         <div className="flex items-center justify-between w-full bg-green-400 p-2 rounded">
 
           <div>
-            <p className="font-semibold">That was right!</p>
+            <p className="font-semibold">That&#39;s right!</p>
             <p className=""><strong>Correct Answer:</strong> {correctAnswer}</p>
           </div>
 
