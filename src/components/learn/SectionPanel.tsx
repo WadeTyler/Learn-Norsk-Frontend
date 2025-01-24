@@ -5,6 +5,7 @@ import {motion, AnimatePresence} from 'framer-motion';
 import Link from "next/link";
 import {useUserStore} from "@/stores/userStore";
 import {useLessonStore} from "@/stores/lessonStore";
+import ProgressCircle from "@/components/learn/ProgressCircle";
 
 const SectionPanel = ({section, currentSection, setCurrentSection}: {
   section: Section;
@@ -41,7 +42,7 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
         <span className="inline-flex items-center gap-4">{section.sectionNumber} - {section.title}
           {isSectionCompleted() && <IconCheck  className="text-accent" />}
           {completedLessonsInSection !== 0 && completedLessonsInSection !== section.lessons.length && (
-            <p className="text-accent font-normal">{completedLessonsInSection}/{section.lessons.length}</p>
+            <ProgressCircle current={completedLessonsInSection} total={section.lessons.length} />
           )}
         </span>
 
