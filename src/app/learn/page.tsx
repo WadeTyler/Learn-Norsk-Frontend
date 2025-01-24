@@ -16,7 +16,7 @@ const Page = () => {
 
   // Store data
   const {sections, getAllSections, isSearchingSections} = useSectionStore();
-  const {fetchCompletedLessons, isLoadingCompletedLessons, loadCompletedLessonsError} = useLessonStore();
+  const {fetchCompletedLessons, isLoadingCompletedLessons, loadCompletedLessonsError, completedLessons} = useLessonStore();
   const {user} = useUserStore();
 
   // Navigation
@@ -33,7 +33,6 @@ const Page = () => {
   }, [getAllSections, fetchCompletedLessons]);
 
   useEffect(() => {
-
     if (sections) {
       const sectionIdStr = searchParams.get("sectionId");
       if (typeof sectionIdStr === "string") {
@@ -44,7 +43,6 @@ const Page = () => {
 
   }, [sections]);
 
-
   function scrollToSection(sectionId: number) {
     const sectionElement = document.getElementById(`section-${sectionId}`);
 
@@ -54,13 +52,25 @@ const Page = () => {
     }
   }
 
+  const totalLessons = sections.reduce((total, section) => total += section.lessons.length, 0);
+  const totalProgress = Math.floor((completedLessons.length/totalLessons) * 100);
+
+
   // Check Loading fields
-  if (isCheckingProtection || isLoadingCompletedLessons || isSearchingSections) return <LoadingScreen/>
+  if (isCheckingProtection || isLoadingCompletedLessons || isSearchingSections || !user) return <LoadingScreen/>
 
   return (
     <div className="w-full bg-background min-h-screen pt-32 p-16 flex flex-col items-center">
       <h1 className="text-primary font-semibold text-3xl">Welcome back, {user?.firstName}!</h1>
       <h2 className="mt-2">{affirmation}</h2>
+
+      <p className="mt-2 mb-1">Total Completion</p>
+      <div className="w-[35rem] h-4 rounded-full bg-white shadow-xl overflow-hidden">
+        <div className="bg-accent h-full duration-300" style={{
+          width: `${totalProgress}%`
+        }} />
+      </div>
+
       <hr className="w-full border my-4"/>
 
       {!loadCompletedLessonsError && sections && (
