@@ -12,7 +12,7 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
   setCurrentSection: React.Dispatch<SetStateAction<number | null>>;
 }) => {
 
-  const {user} = useUserStore();
+  const { user } = useUserStore();
   const { completedLessons } = useLessonStore();
 
   const handleSectionClick = () => {
@@ -20,6 +20,12 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
     else {
       setCurrentSection(section.id);
     }
+  }
+
+  const completedLessonsInSection = completedLessons.filter((cl) => cl.sectionId === section.id).length;
+
+  const isSectionCompleted = () => {
+    return completedLessonsInSection === section.lessons.length;
   }
 
   return (
@@ -32,7 +38,13 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
         className="p-2 text-primary font-semibold text-lg flex justify-between items-center group cursor-pointer hover:text-accent duration-300"
         onClick={handleSectionClick}
       >
-        <span>{section.sectionNumber} - {section.title}</span>
+        <span className="inline-flex items-center gap-4">{section.sectionNumber} - {section.title}
+          {isSectionCompleted() && <IconCheck  className="text-accent" />}
+          {completedLessonsInSection !== 0 && completedLessonsInSection !== section.lessons.length && (
+            <p className="text-accent font-normal">{completedLessonsInSection}/{section.lessons.length}</p>
+          )}
+        </span>
+
         {currentSection !== section.id
           ? <span className="group-hover:scale-110 transition-transform duration-300"><IconChevronDown/></span>
           : <span><IconChevronUp/></span>}
@@ -71,7 +83,7 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
                         Lesson {lesson.lessonNumber}
                         <span className="text-foreground group-hover:text-accent duration-300">| {lesson.title}</span>
                       </p>
-                      {isCompleted && <IconCheck />}
+                      {isCompleted && <IconCheck className="text-accent" />}
                     </div>
                     <p className="text-sm group-hover:text-accent duration-300">{lesson.description}</p>
                   </Link>
