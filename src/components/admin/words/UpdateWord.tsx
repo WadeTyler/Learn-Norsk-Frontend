@@ -69,7 +69,7 @@ const UpdateWord = () => {
           <p className="w-full">Id: {updatedWord.id}</p>
           <p className="w-full">Norsk: {updatedWord.norsk}</p>
           <p className="w-full">Eng: {updatedWord.eng}</p>
-          {updatedWord.image && <img src={updatedWord.image} alt={"New Word Image"} className={"w-full"} />}
+          {updatedWord.image && <img src={updatedWord.image} alt={"New Word Image"} className={"w-full max-w-36 max-h-36"} />}
         </div>
       )}
 

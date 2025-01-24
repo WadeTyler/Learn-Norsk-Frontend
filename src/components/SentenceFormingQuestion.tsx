@@ -11,12 +11,11 @@ const SentenceFormingQuestion = ({question, nextQuestion}: {
 
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [isIncorrect, setIsIncorrect] = useState<boolean>(false);
-
   const [selectedAnswer, setSelectedAnswer] = useState<Word[]>([]);
+
   const correctAnswer = question.answer.map((word) => word.norsk).join(" ");
 
   const handleWordClick = (word: Word) => {
-
     // If already submit just return
     if (isIncorrect || isCorrect) return;
 
@@ -47,9 +46,6 @@ const SentenceFormingQuestion = ({question, nextQuestion}: {
   }
 
   const handleGoNext = () => {
-
-    setSelectedAnswer([]);
-
     if (isCorrect && !isIncorrect) {
       setIsCorrect(false);
       nextQuestion(true, selectedAnswer);
@@ -59,6 +55,8 @@ const SentenceFormingQuestion = ({question, nextQuestion}: {
       setIsCorrect(false);
       nextQuestion(false, selectedAnswer);
     }
+
+    setSelectedAnswer([]);
   }
 
   return (

@@ -11,6 +11,7 @@ import  {Word} from "@/types/Types";
 import {useLessonStore} from "@/stores/lessonStore";
 import toast from "react-hot-toast";
 import {IconArrowNarrowLeftDashed} from "@tabler/icons-react";
+import ImageChoiceQuestion from "@/components/ImageChoiceQuestion";
 
 const Page = () => {
 
@@ -126,6 +127,11 @@ const Page = () => {
           }
 
           {/*  TODO: Add Sentence Typing and Image Choice */}
+
+          {questions[currentQuestion].type === "image-choice" &&
+            <ImageChoiceQuestion question={questions[currentQuestion]} nextQuestion={nextQuestion} />
+          }
+
         </AnimatePresence>
       </motion.div>
 

@@ -62,7 +62,7 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
             className="w-full overflow-hidden"
           >
             <div className="flex flex-col gap-2 w-full">
-              {section.lessons.map((lesson) => {
+              {section.lessons.map((lesson, index) => {
 
                 function getIsCompleted() {
                   return completedLessons.some((completedLesson) => {
@@ -81,7 +81,7 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
                   >
                     <div className="w-full flex items-center justify-between">
                       <p className="text-primary group-hover:text-accent duration-300">
-                        Lesson {lesson.lessonNumber}
+                        Lesson {index + 1}
                         <span className="text-foreground group-hover:text-accent duration-300">| {lesson.title}</span>
                       </p>
                       {isCompleted && <IconCheck className="text-accent" />}

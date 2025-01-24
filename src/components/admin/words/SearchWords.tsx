@@ -4,7 +4,15 @@ import {useWordStore} from "@/stores/wordStore";
 
 const SearchWords = () => {
 
-  const { total, fetchTotal, isLoadingTotal, searchForWord, isSearchingForWord, words, searchForWordError } = useWordStore();
+  const {
+    total,
+    fetchTotal,
+    isLoadingTotal,
+    searchForWord,
+    isSearchingForWord,
+    words,
+    searchForWordError
+  } = useWordStore();
   const [userInput, setUserInput] = useState("");
 
   const handleSearch = () => {
@@ -16,7 +24,8 @@ const SearchWords = () => {
   }, []);
 
   return (
-    <div className="w-[40rem] bg-white p-4 rounded shadow-xl text-zinc-800 flex flex-col items-center gap-4">
+    <div
+      className="w-[40rem] bg-white p-4 rounded shadow-xl max-h-[30rem] text-zinc-800 flex flex-col items-center gap-4 overflow-scroll">
       <h1 className="font-semibold text-xl">Search for words</h1>
       <hr className="w-full border"/>
 
@@ -62,6 +71,7 @@ const SearchWords = () => {
               <p className="w-1/3">Id: {word.id}</p>
               <p className="w-full">Norsk: {word.norsk}</p>
               <p className="w-full">Eng: {word.eng}</p>
+              <p className="text-xs w-full">Img: {word.image ? <a href={word.image} target={"_blank"} className={"underline cursor-pointer text-accent"}>Link</a> : 'N/A'}</p>
             </div>
           ))}
         </div>

@@ -28,7 +28,7 @@ const CreateWords = () => {
 
 
   return (
-    <div className={"w-[40rem] bg-white p-4 rounded shadow-xl text-zinc-800 flex flex-col items-center gap-4"}>
+    <div className={"w-[40rem] max-h-[30rem] overflow-scroll bg-white p-4 rounded shadow-xl text-zinc-800 flex flex-col items-center gap-4"}>
       <h1 className="font-semibold text-xl">Add Words</h1>
 
       <hr className="w-full border" />

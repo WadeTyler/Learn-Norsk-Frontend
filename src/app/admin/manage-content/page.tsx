@@ -14,41 +14,43 @@ import DeleteQuestion from "@/components/admin/questions/DeleteQuestion";
 import DeleteLesson from "@/components/admin/lessons/DeleteLesson";
 import {useAdminProtected} from "@/hooks/useAdminProtected";
 import {LoadingLG} from "@/components/util/Loading";
+import UpdateWord from "@/components/admin/words/UpdateWord";
 
 
 const Page = () => {
 
-  const { isCheckingAdmin } = useAdminProtected();
-  if (isCheckingAdmin) return <LoadingLG />;
+    const {isCheckingAdmin} = useAdminProtected();
+    if (isCheckingAdmin) return <LoadingLG/>;
 
-  return (
-    <div className="w-full min-h-screen flex flex-col items-center gap-16 p-16 pt-32">
-      <h1 className="font-semibold text-2xl">Manage Sections</h1>
-      <div className="w-full flex gap-8 justify-center flex-wrap">
-        <SearchSections/>
-        <CreateSection/>
-        <DeleteSection/>
-      </div>
-      <h1 className="font-semibold text-2xl">Manage Lessons</h1>
-      <div className="w-full flex gap-8 justify-center flex-wrap">
-        <SearchLessons/>
-        <CreateLesson/>
-        <DeleteLesson />
-      </div>
-      <h1 className="font-semibold text-2xl">Manage Questions</h1>
-      <div className="w-full flex gap-8 justify-center flex-wrap">
-        <SearchQuestions/>
-        <CreateQuestion/>
-        <DeleteQuestion />
-      </div>
-      <h1 className="font-semibold text-2xl">Manage Words</h1>
-      <div className="w-full flex gap-8 justify-center flex-wrap">
-        <SearchWords/>
-        <CreateWords />
-        <DeleteWord />
-      </div>
-    </div>
-  );
+    return (
+        <div className="w-full min-h-screen flex flex-col items-center gap-16 p-16 pt-32">
+            <h1 className="font-semibold text-2xl">Manage Sections</h1>
+            <div className="w-full flex gap-8 justify-center flex-wrap">
+                <SearchSections/>
+                <CreateSection/>
+                <DeleteSection/>
+            </div>
+            <h1 className="font-semibold text-2xl">Manage Lessons</h1>
+            <div className="w-full flex gap-8 justify-center flex-wrap">
+                <SearchLessons/>
+                <CreateLesson/>
+                <DeleteLesson/>
+            </div>
+            <h1 className="font-semibold text-2xl">Manage Questions</h1>
+            <div className="w-full flex gap-8 justify-center flex-wrap">
+                <SearchQuestions/>
+                <CreateQuestion/>
+                <DeleteQuestion/>
+            </div>
+            <h1 className="font-semibold text-2xl">Manage Words</h1>
+            <div className="w-full flex gap-8 justify-center flex-wrap">
+                <SearchWords/>
+                <CreateWords/>
+                <DeleteWord/>
+                <UpdateWord/>
+            </div>
+        </div>
+    );
 };
 
 export default Page;
