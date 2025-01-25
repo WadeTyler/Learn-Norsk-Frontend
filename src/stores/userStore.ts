@@ -26,7 +26,6 @@ export const useUserStore = create<UserStore>((set, get) => ({
       set({ isLoadingUser: true });
       const response = await axios.get("/auth/me");
       set({ user: response.data, isLoadingUser: false });
-      console.log("User: ", response.data);
     } catch (e) {
       console.log(e.response?.data || "Failed to fetch user.");
       set({ isLoadingUser: false, user: null });

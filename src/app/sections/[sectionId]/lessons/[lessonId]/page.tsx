@@ -14,6 +14,7 @@ import {IconArrowNarrowLeftDashed} from "@tabler/icons-react";
 import ImageChoiceQuestion from "@/components/ImageChoiceQuestion";
 import SentenceTypeQuestion from "@/components/SentenceTypeQuestion";
 import {getRandomAffirmation, getRandomMistakeAffirmation} from "@/constants/messages";
+import {useUserStore} from "@/stores/userStore";
 
 const Page = () => {
 
@@ -35,6 +36,7 @@ const Page = () => {
   // Stores
   const { currentQuestion, questionsLength, questions, isLoadingQuestions, fetchQuestions, fetchQuestionsError, setFetchQuestionsError, handleIncorrectQuestion, handleNextQuestion } = useSectionStore();
   const { isCheckingAnswers, checkAnswers, resetUserAnswers, addToUserAnswers } = useLessonStore();
+  const { user } = useUserStore();
 
   // Fetch questions on load
   useEffect(() => {
@@ -47,9 +49,9 @@ const Page = () => {
       }
     }
 
-    handleLoadQuestions()
+    if (user) handleLoadQuestions();
 
-  }, [fetchQuestions, sectionId, lessonId]);
+  }, [fetchQuestions, sectionId, lessonId, user]);
 
 
   const nextQuestion = async (isCorrect: boolean, answer: Word[]) => {
@@ -109,27 +111,30 @@ const Page = () => {
 
   // Show an affirmation every 3 questions correct, or every 3 questions wrong in a row
   useEffect(() => {
+    const handleAffirmations = () => {
+      // If it's been 3+ questions since aff
+      if (questionsSinceAffirmation >= 3) {
 
-    // If it's been 3+ questions since aff
-    if (questionsSinceAffirmation >= 3) {
-
-      // If we haven't gotten a question correct in 3+ tries
-      if (questionsSinceCorrect >= 3) {
-        toast(getRandomMistakeAffirmation(), {
-          removeDelay: 4000,
-        });
+        // If we haven't gotten a question correct in 3+ tries
+        if (questionsSinceCorrect >= 3) {
+          toast(getRandomMistakeAffirmation(), {
+            removeDelay: 4000,
+          });
+        }
+        // Show regular aff instead
+        else {
+          toast(getRandomAffirmation(), {
+            removeDelay: 4000,
+          });
+        }
+        // Reset aff counter
+        setQuestionsSinceAffirmation(0);
       }
-      // Show regular aff instead
-      else {
-        toast(getRandomAffirmation(), {
-          removeDelay: 4000,
-        });
-      }
-      // Reset aff counter
-      setQuestionsSinceAffirmation(0);
     }
 
-  }, [questionsSinceAffirmation, questionsSinceCorrect]);
+    if (user) handleAffirmations();
+
+  }, [questionsSinceAffirmation, questionsSinceCorrect, user]);
 
   // Conditional Returns
   if (isCheckingProtection || isLoadingQuestions || isCheckingAnswers) return <LoadingScreen />

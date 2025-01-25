@@ -28,9 +28,11 @@ const Page = () => {
 
   // Get all sections on load
   useEffect(() => {
-    getAllSections();
-    fetchCompletedLessons();
-  }, [getAllSections, fetchCompletedLessons]);
+    if (user) {
+      getAllSections();
+      fetchCompletedLessons();
+    }
+  }, [getAllSections, fetchCompletedLessons, user]);
 
   useEffect(() => {
     if (sections) {
