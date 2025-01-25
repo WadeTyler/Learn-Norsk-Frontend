@@ -63,7 +63,6 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
     try {
       set({isSearchingSections: true});
       const response = await axios.get("/sections");
-      console.log(response.data);
       set({sections: response.data, isSearchingSections: false});
     } catch (e) {
       console.log(e.response?.data || "Failed to get all sections");
@@ -138,10 +137,8 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
 
   // sets current question to the next
   handleNextQuestion: () => {
-    console.log("handling next question")
     const questions = get().questions;
     const nextQuestion = questions.dequeue();
-    questions.log();
     set({currentQuestion: nextQuestion, questions: questions});
   },
 
@@ -153,6 +150,5 @@ function convertQuestionsToQueue(arr: Question[]): QuestionQueue {
   for (let i = 0; i < arr.length; i++) {
     queue.enqueue(arr[i]);
   }
-  queue.log();
   return queue;
 }

@@ -74,10 +74,6 @@ const Page = () => {
     await addToUserAnswers(newUserAnswer);
 
     // Check if at last question
-
-    console.log("Current Question: ", currentQuestion);
-    console.log("Questions Queue: ", questions);
-
     if (questions.length === 0) {
       if (lessonIdNum && sectionIdNum) {
         // Check answers
