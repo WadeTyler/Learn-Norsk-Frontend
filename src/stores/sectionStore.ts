@@ -1,6 +1,7 @@
 import {create} from "zustand";
 import axios from "@/lib/axios";
 import {Question, Section} from "@/types/Types";
+import {QuestionQueue} from "@/lib/QuestionQueue";
 
 interface SectionStore {
 
@@ -22,13 +23,16 @@ interface SectionStore {
   deleteSectionError: string;
   deleteSection: (id: number) => Promise<void>;
 
-  questions: Question[];
+  questions: QuestionQueue;
+  currentQuestion: Question | null;
+  questionsLength: number;
   isLoadingQuestions: boolean;
   fetchQuestionsError: string;
   setFetchQuestionsError: (message: string) => void;
   fetchQuestions: (sectionId: number, lessonId: number) => Promise<void>;
 
   handleIncorrectQuestion: (question: Question) => void;
+  handleNextQuestion: () => void;
 }
 
 export const useSectionStore = create<SectionStore>((set, get) => ({
@@ -38,7 +42,7 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
   fetchTotal: async () => {
     try {
       const response = await axios.get("/sections/total");
-      set({ total: response.data });
+      set({total: response.data});
     } catch (e) {
       console.log(e.response?.data || "Failed to fetch total sections");
     }
@@ -48,22 +52,22 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
   searchSectionsById: async (id) => {
     try {
       const response = await axios.get(`/sections/${id}`);
-      set({ sections: [response.data] });
+      set({sections: [response.data]});
     } catch (e) {
       console.log(e.response?.data || "Section not found");
-      set({ sections: [] });
+      set({sections: []});
     }
   },
 
   getAllSections: async () => {
     try {
-      set({ isSearchingSections: true });
+      set({isSearchingSections: true});
       const response = await axios.get("/sections");
       console.log(response.data);
-      set({ sections: response.data, isSearchingSections: false });
+      set({sections: response.data, isSearchingSections: false});
     } catch (e) {
       console.log(e.response?.data || "Failed to get all sections");
-      set({ sections: [], isSearchingSections: false });
+      set({sections: [], isSearchingSections: false});
     }
   },
 
@@ -73,12 +77,12 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
   createSectionError: "",
   createSection: async (title, sectionNumber, experienceReward, lessonIds) => {
     try {
-      set({ isCreatingSection: true, newSection: null });
-      const response = await axios.post("/sections", { title, sectionNumber, experienceReward, lessonIds });
-      set({ newSection: response.data, isCreatingSection: false });
+      set({isCreatingSection: true, newSection: null});
+      const response = await axios.post("/sections", {title, sectionNumber, experienceReward, lessonIds});
+      set({newSection: response.data, isCreatingSection: false});
       get().fetchTotal();
     } catch (e) {
-      set({ createSectionError: e.response?.data || "Failed to create section", isCreatingSection: false });
+      set({createSectionError: e.response?.data || "Failed to create section", isCreatingSection: false});
     }
   },
 
@@ -88,36 +92,67 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
 
   deleteSection: async (id) => {
     try {
-      set({ isDeletingSection: true, deleteSectionError: "", deleteSectionSuccess: "" });
+      set({isDeletingSection: true, deleteSectionError: "", deleteSectionSuccess: ""});
       const response = await axios.delete(`/sections/${id}`);
-      set({ deleteSectionSuccess: response.data, isDeletingSection: false });
+      set({deleteSectionSuccess: response.data, isDeletingSection: false});
       get().fetchTotal();
     } catch (e) {
-      set({ deleteSectionError: e.response?.data || "Failed to delete section", isDeletingSection: false });
+      set({deleteSectionError: e.response?.data || "Failed to delete section", isDeletingSection: false});
     }
-},
+  },
 
-  questions: [],
+  questions: new QuestionQueue(),
+  currentQuestion: null,
+  questionsLength: 0,
   isLoadingQuestions: true,
   fetchQuestionsError: "",
   setFetchQuestionsError: (message) => {
-    set({ fetchQuestionsError: message, isLoadingQuestions: false });
+    set({fetchQuestionsError: message, isLoadingQuestions: false});
   },
+  // Load questions in the lesson, in the section
   fetchQuestions: async (sectionId, lessonId) => {
     try {
-      set({ questions: [], isLoadingQuestions: true, fetchQuestionsError: "" });
+      set({questions: new QuestionQueue(), isLoadingQuestions: true, fetchQuestionsError: ""});
       const response = await axios.get(`/sections/${sectionId}/lessons/${lessonId}/questions`);
-      set({ questions: response.data, isLoadingQuestions: false });
-      console.log(response.data);
+      const queue = convertQuestionsToQueue(response.data);
+      const firstQuestion = queue.dequeue();
+
+      set({
+        currentQuestion: firstQuestion,
+        questions: queue,
+        questionsLength: response.data.length,
+        isLoadingQuestions: false
+      });
+
     } catch (e) {
-      set({ fetchQuestionsError: e.response?.data || "Failed to load questions.", isLoadingQuestions: false });
+      set({fetchQuestionsError: e.response?.data || "Failed to load questions.", isLoadingQuestions: false});
     }
   },
 
-  handleIncorrectQuestion: (question) => {
-    const newQuestions = get().questions.filter(q => q.id !== question.id);
-    newQuestions.push(question);
-    set({ questions: newQuestions });
-  }
+  // add question back to end of queue
+  handleIncorrectQuestion: (question: Question) => {
+    const questions = get().questions;
+    questions.enqueue(question);
+    set({questions: questions});
+  },
 
-}))
+  // sets current question to the next
+  handleNextQuestion: () => {
+    console.log("handling next question")
+    const questions = get().questions;
+    const nextQuestion = questions.dequeue();
+    questions.log();
+    set({currentQuestion: nextQuestion, questions: questions});
+  },
+
+}));
+
+// Convert to queue and return queue
+function convertQuestionsToQueue(arr: Question[]): QuestionQueue {
+  const queue = new QuestionQueue();
+  for (let i = 0; i < arr.length; i++) {
+    queue.enqueue(arr[i]);
+  }
+  queue.log();
+  return queue;
+}

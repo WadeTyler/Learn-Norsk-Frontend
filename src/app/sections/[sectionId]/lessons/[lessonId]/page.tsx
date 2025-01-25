@@ -24,7 +24,8 @@ const Page = () => {
   const { sectionId, lessonId } = useParams();
   const [sectionIdNum] = useState<number | null>(typeof sectionId === "string" ? parseInt(sectionId) : null);
   const [lessonIdNum] = useState<number | null>(typeof lessonId === "string" ? parseInt(lessonId) : null);
-  const [currentQuestion, setCurrentQuestion] = useState<number>(0);
+  const [countCorrect, setCountCorrect] = useState<number>(0);
+  // const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [questionsSinceAffirmation, setQuestionsSinceAffirmation] = useState<number>(0);
   const [questionsSinceCorrect, setQuestionsSinceCorrect] = useState<number>(0);
 
@@ -32,7 +33,7 @@ const Page = () => {
   const router = useRouter();
 
   // Stores
-  const { questions, isLoadingQuestions, fetchQuestions, fetchQuestionsError, setFetchQuestionsError, handleIncorrectQuestion } = useSectionStore();
+  const { currentQuestion, questionsLength, questions, isLoadingQuestions, fetchQuestions, fetchQuestionsError, setFetchQuestionsError, handleIncorrectQuestion, handleNextQuestion } = useSectionStore();
   const { isCheckingAnswers, checkAnswers, resetUserAnswers, addToUserAnswers } = useLessonStore();
 
   // Fetch questions on load
@@ -53,11 +54,13 @@ const Page = () => {
 
   const nextQuestion = async (isCorrect: boolean, answer: Word[]) => {
 
+    if (!currentQuestion) return;
 
     // This condition check is important, because if the question is incorrect we just want to move it to the end of the stack
     // If we do that, the index will stay the same, so we don't have to increment the currentQuestion.
     if (!isCorrect) {
-      handleIncorrectQuestion(questions[currentQuestion]);
+      handleIncorrectQuestion(currentQuestion);
+      handleNextQuestion();
       setQuestionsSinceCorrect(prev => prev += 1);
       setQuestionsSinceAffirmation(prev => prev + 1);
       return;
@@ -67,11 +70,15 @@ const Page = () => {
     setQuestionsSinceCorrect(0);
 
     // add answer to the userAnswers array
-    const newUserAnswer = { questionId: questions[currentQuestion].id, answer: answer };
+    const newUserAnswer = { questionId: currentQuestion.id, answer: answer };
     await addToUserAnswers(newUserAnswer);
 
     // Check if at last question
-    if (currentQuestion === questions.length - 1) {
+
+    console.log("Current Question: ", currentQuestion);
+    console.log("Questions Queue: ", questions);
+
+    if (questions.length === 0) {
       if (lessonIdNum && sectionIdNum) {
         // Check answers
         const answersValid = await checkAnswers(sectionIdNum, lessonIdNum);
@@ -90,9 +97,10 @@ const Page = () => {
     }
     // Increment if not the last question
     else {
-      setCurrentQuestion(prev => prev + 1);
+      handleNextQuestion();
     }
-    setQuestionsSinceAffirmation(prev => prev + 1);
+    setCountCorrect(prev => prev += 1);
+    setQuestionsSinceAffirmation(prev => prev += 1);
   }
 
   const goBackToLearnPage = () => {
@@ -148,7 +156,7 @@ const Page = () => {
         <div
           className={`h-full bg-accent duration-700`}
           style={{
-            width: `${(currentQuestion / questions.length) * 100}%`
+            width: `${(countCorrect / questionsLength) * 100}%`
           }}
         />
       </div>
@@ -159,23 +167,23 @@ const Page = () => {
         transition={{ duration: .5 }}
         className="w-[40rem] bg-white shadow-xl rounded h-[40rem] p-4"
       >
-        <AnimatePresence initial={false}>
-          {/* Sentence Forming Type */}
-          {questions[currentQuestion].type === "sentence-forming" &&
-              <SentenceFormingQuestion question={questions[currentQuestion]} nextQuestion={nextQuestion} />
-          }
+        {currentQuestion &&
+            <AnimatePresence initial={false}>
+            {/* Sentence Forming Type */}
+            {currentQuestion.type === "sentence-forming" &&
+                <SentenceFormingQuestion question={currentQuestion} nextQuestion={nextQuestion} />
+            }
 
-          {/*  TODO: Add Sentence Typing and Image Choice */}
+            {currentQuestion.type === "image-choice" &&
+              <ImageChoiceQuestion question={currentQuestion} nextQuestion={nextQuestion} />
+            }
 
-          {questions[currentQuestion].type === "image-choice" &&
-            <ImageChoiceQuestion question={questions[currentQuestion]} nextQuestion={nextQuestion} />
-          }
+            {currentQuestion.type === "sentence-typing" &&
+              <SentenceTypeQuestion question={currentQuestion} nextQuestion={nextQuestion} />
+            }
 
-          {questions[currentQuestion].type === "sentence-typing" &&
-            <SentenceTypeQuestion question={questions[currentQuestion]} nextQuestion={nextQuestion} />
-          }
-
-        </AnimatePresence>
+          </AnimatePresence>
+        }
       </motion.div>
 
     </div>

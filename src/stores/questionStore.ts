@@ -87,4 +87,4 @@ export const useQuestionStore = create<QuestionStore>((set, get) => ({
       set({ isDeletingQuestion: false, deleteQuestionError: e.response?.data || "Failed to delete question.", deleteQuestionSuccess: "" });
     }
   }
-}))
+}));
