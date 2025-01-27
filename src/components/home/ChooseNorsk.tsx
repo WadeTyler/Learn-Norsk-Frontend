@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const ChooseNorsk = () => {
   return (
-    <div className="w-full xl:h-[49rem] bg-background2 flex flex-col items-center justify-center relative lg:pb-36">
+    <div className="w-full xl:h-[49rem] bg-background2 flex flex-col items-center justify-center relative xl:pb-36">
       <div className="xl:max-w-[75rem] xl:h-96 flex  flex-col lg:flex-row items-center justify-evenly lg:gap-16 gap-8 xl:gap-24 xl:p-0 p-8">
         {/* Left Side */}
         <motion.div
