@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 const Testimonials = () => {
   return (
-    <div className="w-full h-[49rem] flex flex-col items-center justify-center pb-36 bg-background2 gap-8 relative">
+    <div className="w-full lg:h-[49rem] flex flex-col items-center justify-center lg:pb-36 bg-background2 gap-8 relative p-8">
 
       <motion.p
         initial={{ opacity: 0, y: 20 }}
@@ -36,7 +36,7 @@ const Testimonials = () => {
           viewport={{ once: true, amount: .5 }}
           transition={{duration: .2, delay: .5 }}
           exit={{ opacity: 0, transition: { duration: 0, delay: 0 }}}
-          className="w-96 flex flex-col items-center gap-4"
+          className="xl:w-96 flex flex-col items-center gap-4"
         >
           <Stars />
           <p className="text-lg font-bold text-center">Learn Norsk made mastering Norwegian enjoyable and engaging. I love the interactive lessons and quizzes that keep me motivated!</p>
@@ -53,7 +53,7 @@ const Testimonials = () => {
           viewport={{ once: true, amount: .5 }}
           transition={{duration: .2, delay: .7 }}
           exit={{ opacity: 0, transition: { duration: 0, delay: 0 }}}
-          className="w-96 flex flex-col items-center gap-4"
+          className="xl:w-96 flex flex-col items-center gap-4"
         >
           <Stars />
           <p className="text-lg font-bold text-center">The structured lessons and friendly interface made it easy for me to learn at my own pace. Highly recommend Learn Norsk!</p>
@@ -70,7 +70,7 @@ const Testimonials = () => {
           viewport={{ once: true, amount: .5 }}
           transition={{duration: .2, delay: .9 }}
           exit={{ opacity: 0, transition: { duration: 0, delay: 0 }}}
-          className="w-96 flex flex-col items-center gap-4"
+          className="xl:w-96 flex flex-col items-center gap-4"
         >
           <Stars />
           <p className="text-lg font-bold text-center">I never thought I could learn a language so quickly! Learn Norsk provides an amazing platform for anyone wanting to explore Norwegian culture.</p>

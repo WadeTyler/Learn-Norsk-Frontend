@@ -2,21 +2,28 @@
 import React from 'react';
 import Image from "next/image";
 import { motion} from 'framer-motion';
+import Link from 'next/link';
+import {useRouter} from "next/navigation";
 
 const Hero = () => {
+  const router = useRouter();
+  const navigateToSignup = () => {
+    router.push('/signup');
+  }
+
   return (
     <div
-      className="w-full h-[40rem] bg-accent relative"
+      className="w-full h-screen md:h-[40rem] bg-accent relative"
     >
       <div className="relative w-full h-full">
-        <Image src={"/hero-image.jpeg"} alt={"Hero Image"} fill={true} quality={100}/>
+        <Image src={"/hero-image.jpeg"} alt={"Hero Image"} fill={true} quality={100} className="object-cover"/>
       </div>
 
       <div
         className="absolute z-10 top-0 left-0 w-full h-full flex items-center justify-center  bg-[rgba(0,20,30,.5)] text-white">
 
         <div
-          className="max-w-[75rem] flex flex-col gap-4 items-center justify-center text-center p-2"
+          className="sm:w-full lg:max-w-[75rem] flex flex-col gap-4 items-center justify-center text-center p-4 lg:p-2"
         >
 
           <motion.p
@@ -34,7 +41,7 @@ const Hero = () => {
             viewport={{ once: true, amount: .5 }}
             exit={{opacity: 0}}
             transition={{duration: .5}}
-            className="text-6xl font-semibold"
+            className="text-3xl md:text-6xl md:font-semibold font-bold"
           >
             Unlock Your Future with Learn Norsk
           </motion.h2>
@@ -56,6 +63,7 @@ const Hero = () => {
             exit={{opacity: 0}}
             transition={{duration: .5, delay: 1}}
             className="submit-btn2"
+            onClick={navigateToSignup}
           >
             Start Learning Now
           </motion.button>

@@ -78,7 +78,7 @@ const DesktopNavbar = ({user}: {
         currentPage === "" && isAtTop ? 'bg-transparent backdrop-blur shadow-none' : 'bg-[rgba(0,20,30,.7)] backdrop-blur shadow-lg'}
       `}>
 
-      <div className="w-[75rem] flex items-center justify-between">
+      <div className="w-full lg:w-[45rem] xl:w-[75rem] px-4 lg:p-0 flex items-center justify-between">
         <Link href="/" className="text-xl font-bold">Learn Norsk</Link>
 
         <nav className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-between gap-8">
@@ -91,7 +91,7 @@ const DesktopNavbar = ({user}: {
 
         <div className="flex items-center gap-4">
           {!user && <Link href={"/login"}
-                          className={`nav-bar-link ${currentPage === 'login' && 'text-accentLight'}`}>Login</Link>}
+                          className={`nav-bar-link xl:visible invisible ${currentPage === 'login' && 'text-accentLight'}`}>Login</Link>}
           {!user && <Link href={"/signup"} className="submit-btn3">Start Learning Now</Link>}
           {user?.role === "admin" &&
             <Link
