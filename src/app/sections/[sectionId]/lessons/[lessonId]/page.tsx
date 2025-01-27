@@ -51,7 +51,7 @@ const Page = () => {
 
     if (user) handleLoadQuestions();
 
-  }, [fetchQuestions, sectionId, lessonId, user]);
+  }, [fetchQuestions, sectionId, lessonId, user, lessonIdNum, resetUserAnswers, sectionIdNum, setFetchQuestionsError]);
 
 
   const nextQuestion = async (isCorrect: boolean, answer: Word[]) => {

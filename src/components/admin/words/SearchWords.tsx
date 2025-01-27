@@ -21,7 +21,7 @@ const SearchWords = () => {
 
   useEffect(() => {
     fetchTotal();
-  }, []);
+  }, [fetchTotal]);
 
   return (
     <div

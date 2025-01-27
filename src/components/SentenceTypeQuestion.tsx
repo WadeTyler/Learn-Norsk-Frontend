@@ -97,7 +97,7 @@ const SentenceTypeQuestion = ({question, nextQuestion}: {
           {norskLetters.map((letter) => (
             <div
               key={letter}
-              className={"bg-primary text-background px-2 py-1 rounded text-lg cursor-pointer hover:bg-accent shadow-lg hover:shadow-xl hover:scale-95 duration-300 select-none"}
+              className={"bg-background3 text-white px-2 py-1 rounded text-lg cursor-pointer hover:bg-accent shadow-lg hover:shadow-xl hover:scale-95 duration-300 select-none"}
               onClick={() => setUserInput(prev => prev += letter)}
             >
               {letter}

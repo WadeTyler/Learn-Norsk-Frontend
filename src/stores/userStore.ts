@@ -17,7 +17,7 @@ interface UserStore {
   isLoggingOut: boolean
 }
 
-export const useUserStore = create<UserStore>((set, get) => ({
+export const useUserStore = create<UserStore>((set) => ({
   // Load User
   user: null,
   isLoadingUser: true,
@@ -27,6 +27,8 @@ export const useUserStore = create<UserStore>((set, get) => ({
       const response = await axios.get("/auth/me");
       set({ user: response.data, isLoadingUser: false });
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       console.log(e.response?.data || "Failed to fetch user.");
       set({ isLoadingUser: false, user: null });
     }
@@ -41,6 +43,8 @@ export const useUserStore = create<UserStore>((set, get) => ({
       const response = await axios.post("/auth/login", { email, password });
       set({ user: response.data, isLoggingIn: false });
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       set({ loginError: e.response?.data || "Failed to login.", isLoggingIn: false, user: null });
     }
   },
@@ -54,6 +58,8 @@ export const useUserStore = create<UserStore>((set, get) => ({
       const response = await axios.post("/auth/signup", { firstName, lastName, email, password, confirmPassword });
       set({ user: response.data, isSigningUp: false });
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       set({ signupError: e.response?.data || "Failed to signup.", isSigningUp: false, user: null });
     }
   },
@@ -67,6 +73,8 @@ export const useUserStore = create<UserStore>((set, get) => ({
       set({ user: null, isLoggingOut: false });
     } catch (e) {
       set({ isLoggingOut: false });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       toast.error(e.response?.data || "Something went wrong");
     }
   }

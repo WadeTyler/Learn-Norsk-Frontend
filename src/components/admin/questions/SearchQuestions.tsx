@@ -19,7 +19,7 @@ const SearchQuestions = () => {
   useEffect(() => {
     fetchTotal();
     searchForQuestion("");
-  }, []);
+  }, [fetchTotal, searchForQuestion]);
 
   return (
     <div

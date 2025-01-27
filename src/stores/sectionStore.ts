@@ -44,6 +44,8 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
       const response = await axios.get("/sections/total");
       set({total: response.data});
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       console.log(e.response?.data || "Failed to fetch total sections");
     }
   },
@@ -54,6 +56,8 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
       const response = await axios.get(`/sections/${id}`);
       set({sections: [response.data]});
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       console.log(e.response?.data || "Section not found");
       set({sections: []});
     }
@@ -65,6 +69,8 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
       const response = await axios.get("/sections");
       set({sections: response.data, isSearchingSections: false});
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       console.log(e.response?.data || "Failed to get all sections");
       set({sections: [], isSearchingSections: false});
     }
@@ -81,6 +87,8 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
       set({newSection: response.data, isCreatingSection: false});
       get().fetchTotal();
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       set({createSectionError: e.response?.data || "Failed to create section", isCreatingSection: false});
     }
   },
@@ -96,6 +104,8 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
       set({deleteSectionSuccess: response.data, isDeletingSection: false});
       get().fetchTotal();
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       set({deleteSectionError: e.response?.data || "Failed to delete section", isDeletingSection: false});
     }
   },
@@ -124,6 +134,8 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
       });
 
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       set({fetchQuestionsError: e.response?.data || "Failed to load questions.", isLoadingQuestions: false});
     }
   },

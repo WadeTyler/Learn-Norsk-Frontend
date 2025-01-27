@@ -4,7 +4,7 @@ import {useLessonStore} from "@/stores/lessonStore";
 
 const SearchLessons = () => {
 
-  const { isSearchingLessons, lessons, searchLessons, searchLessonsById, total, isLoadingTotalLessons, fetchTotal } = useLessonStore();
+  const { isSearchingLessons, lessons, searchLessons, searchLessonsById, total, fetchTotal } = useLessonStore();
 
   const [userInput, setUserInput] = useState<string>("");
 

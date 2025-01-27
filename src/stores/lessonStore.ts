@@ -1,7 +1,6 @@
 import {create} from "zustand";
 import axios from "@/lib/axios";
 import {CompletedLesson, Lesson, UserAnswer} from "@/types/Types";
-import toast from "react-hot-toast";
 
 interface LessonStore {
   isCreatingLesson: boolean;
@@ -44,6 +43,8 @@ export const useLessonStore = create<LessonStore>((set, get) => ({
       set({ isCreatingLesson: false, newLesson: response.data });
       get().fetchTotal();
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       set({ createLessonError: e.response?.data || "Failed to create lesson", isCreatingLesson: false });
     }
   },
@@ -57,6 +58,8 @@ export const useLessonStore = create<LessonStore>((set, get) => ({
       set({ lessons: response.data });
     } catch (e) {
       set({ lessons: [] });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       console.log(e.response?.data || "Failed to search lessons.");
     } finally {
       set({ isSearchingLessons: false });
@@ -69,6 +72,8 @@ export const useLessonStore = create<LessonStore>((set, get) => ({
       set({ lessons: [response.data] });
     } catch (e) {
       set({ lessons: [] });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       console.log(e.response?.data || "Failed to search lessons.");
     } finally {}
     set({ isSearchingLessons: false });
@@ -85,6 +90,8 @@ export const useLessonStore = create<LessonStore>((set, get) => ({
       set({ isDeletingLesson: false, deleteLessonSuccess: response.data });
       get().fetchTotal();
   } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
     set({ isDeletingLesson: false, deleteLessonError: e.response?.data || "Failed to delete lesson" })};
   },
 
@@ -96,6 +103,8 @@ export const useLessonStore = create<LessonStore>((set, get) => ({
       const response = await axios.get("/lessons/total");
       set({ total: response.data, isLoadingTotalLessons: false });
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       console.log(e.response?.data || "Failed to fetch total lessons.");
       set({ total: null, isLoadingTotalLessons: false })
     }
@@ -121,6 +130,8 @@ export const useLessonStore = create<LessonStore>((set, get) => ({
       return true;
     } catch (e) {
       set({ isCheckingAnswers: false });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       console.log(e.response?.data || "Failed to check answers.");
       return false;
     }
@@ -135,6 +146,8 @@ export const useLessonStore = create<LessonStore>((set, get) => ({
       const response = await axios.get("/lessons/completed");
       set({ completedLessons: response.data, isLoadingCompletedLessons: false });
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       set({ isLoadingCompletedLessons: false, loadCompletedLessonsError: e.response.data || "Failed to load completed lessons" });
     }
   },

@@ -3,9 +3,10 @@ import React, { useState} from 'react';
 import {useUserStore} from "@/stores/userStore";
 import {LoadingLG, LoadingSM} from "@/components/util/Loading";
 import {useUnprotected} from "@/hooks/useUnprotected";
+import Link from 'next/link';
 
 const Page = () => {
-  const { isCheckingProtection } = useUnprotected();
+  const { isCheckingProtection } = useUnprotected("/learn");
 
   const { isLoggingIn, loginError, login } = useUserStore();
 
@@ -50,6 +51,8 @@ const Page = () => {
             {isLoggingIn ? <LoadingSM /> : "Login"}
           </button>
         </form>
+        <p>Don&#39;t have an account? <Link href={"/signup"} className="text-accent hover:underline cursor-pointer">Signup Now</Link></p>
+
 
         {loginError && <p className="text-red-500 text-center">{loginError}</p>}
 

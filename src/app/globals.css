@@ -1,29 +1,43 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   --background: #f4f4f4;
+  --background-2: #E3F2F8;
+  --background-3: #082028;
   --foreground: #27272a;
-  --primary: #7f1d1d;
-  --accent: #60a5fa;
-  --accentLight: #8ebcf5;
+  --primary: #00AEEF;
+  /*--primary: #7f1d1d;*/
+  /*--accent: #60a5fa;*/
+  --accent: #00AEEF;
+  /*--accentLight: #8ebcf5;*/
+  --accentLight: #26c4ff;
   --accentDark: #4680c7;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-family: 'Mulish', 'Open Sans', Arial, Helvetica, sans-serif;
 }
 input {
   @apply bg-transparent;
 }
 
 .submit-btn {
-  @apply bg-accent hover:bg-accentDark px-2 py-1 rounded text-white shadow-xl duration-300 cursor-pointer hover:scale-95;
+  @apply bg-accent hover:bg-accentLight px-2 py-1 rounded text-white shadow-xl duration-300 cursor-pointer hover:scale-95;
+}
+
+.submit-btn2 {
+  @apply bg-accent hover:bg-accentLight px-10 py-3 rounded-full shadow-xl duration-300 cursor-pointer w-fit text-white;
+}
+
+.submit-btn3 {
+  @apply bg-transparent border-white border-2 hover:bg-accent hover:border-accent px-5 py-2 rounded-full shadow-xl duration-300 cursor-pointer w-fit text-white;
 }
 
 .input-bar {
@@ -42,6 +56,10 @@ input {
   @apply duration-500 cursor-pointer hover:bg-accent hover:font-semibold px-2 py-1 rounded hover:shadow-xl;
 }
 
+.nav-bar-link {
+  @apply duration-300 cursor-pointer hover:text-accent;
+}
+
 .dropdown-btn {
-  @apply w-full text-primary inline-flex gap-2 hover:bg-primary hover:text-background rounded p-1 hover:shadow-xl duration-300 cursor-pointer;
+  @apply w-full text-accent inline-flex gap-2 hover:bg-accentLight hover:text-background2 rounded p-1 hover:shadow-xl duration-300 cursor-pointer;
 }

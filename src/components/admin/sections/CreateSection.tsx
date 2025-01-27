@@ -2,7 +2,6 @@
 import React, {useState} from 'react';
 import {useSectionStore} from "@/stores/sectionStore";
 import {LoadingSM} from "@/components/util/Loading";
-import {create} from "zustand";
 
 const CreateSection = () => {
 

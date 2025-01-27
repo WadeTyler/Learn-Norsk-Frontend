@@ -74,7 +74,7 @@ const ImageChoiceQuestion = ({question, nextQuestion}: {
                  className={"w-full h-32 object-cover object-center"}/>
             <p
               className={`w-full h-full p-4 flex items-center justify-center text-background font-semibold text-xl duration-300 ${
-                answered ? (correctAnswer.id === option.id ? 'bg-accent' : 'bg-background text-primary') : 'bg-primary'
+                answered ? (correctAnswer.id === option.id ? 'bg-accent' : 'bg-background text-primary') : 'bg-background3'
               }
               `}
             >

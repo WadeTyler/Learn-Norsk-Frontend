@@ -3,7 +3,6 @@ import {Section} from "@/types/Types";
 import {IconCheck, IconChevronDown, IconChevronUp} from "@tabler/icons-react";
 import {motion, AnimatePresence} from 'framer-motion';
 import Link from "next/link";
-import {useUserStore} from "@/stores/userStore";
 import {useLessonStore} from "@/stores/lessonStore";
 import ProgressCircle from "@/components/learn/ProgressCircle";
 
@@ -13,7 +12,6 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
   setCurrentSection: React.Dispatch<SetStateAction<number | null>>;
 }) => {
 
-  const { user } = useUserStore();
   const { completedLessons } = useLessonStore();
 
   const handleSectionClick = () => {
@@ -82,7 +80,7 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
                     <div className="w-full flex items-center justify-between">
                       <p className="text-primary group-hover:text-accent duration-300">
                         Lesson {index + 1}
-                        <span className="text-foreground group-hover:text-accent duration-300">| {lesson.title}</span>
+                        <span className="text-foreground group-hover:text-accent duration-300"> | {lesson.title}</span>
                       </p>
                       {isCompleted && <IconCheck className="text-accent" />}
                     </div>

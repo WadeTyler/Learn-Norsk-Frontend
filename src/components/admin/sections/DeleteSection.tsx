@@ -8,7 +8,7 @@ const DeleteSection = () => {
 
   const [userInput, setUserInput] = useState<number>(0);
 
-  const handleDelete = (e) => {
+  const handleDelete = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isDeletingSection || userInput === 0) return;
     deleteSection(userInput);

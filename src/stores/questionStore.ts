@@ -27,7 +27,7 @@ interface QuestionStore {
   deleteQuestion: (id: number) => Promise<void>;
 }
 
-export const useQuestionStore = create<QuestionStore>((set, get) => ({
+export const useQuestionStore = create<QuestionStore>((set) => ({
   // Variables
   isCreatingQuestion: false,
   createQuestionError: "",
@@ -49,6 +49,8 @@ export const useQuestionStore = create<QuestionStore>((set, get) => ({
       const response = await axios.get(`/questions/search?query=${query}`);
       set({ questions: response.data, isSearchingForQuestion: false });
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       console.log(e.response.data || "Failed to search for questions.");
       set({ questions: [], isSearchingForQuestion: false });
     }
@@ -59,6 +61,8 @@ export const useQuestionStore = create<QuestionStore>((set, get) => ({
       const response = await axios.get("/questions/total");
       set({ total: response.data });
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       console.log(e.response.data || "Failed to fetch total.");
       set({ total: null });
     }
@@ -74,6 +78,8 @@ export const useQuestionStore = create<QuestionStore>((set, get) => ({
       console.log("Question created successfully:", response.data);
       set({ isCreatingQuestion: false, newQuestion: response.data });
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       set({ isCreatingQuestion: false, createQuestionError: e.response?.data || "Failed to create question." });
     }
   },
@@ -84,6 +90,8 @@ export const useQuestionStore = create<QuestionStore>((set, get) => ({
       const response = await axios.delete(`/questions/${id}`);
       set({ deleteQuestionSuccess: response.data || "Question Deleted.", isDeletingQuestion: false });
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       set({ isDeletingQuestion: false, deleteQuestionError: e.response?.data || "Failed to delete question.", deleteQuestionSuccess: "" });
     }
   }

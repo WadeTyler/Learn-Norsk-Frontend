@@ -1,10 +1,9 @@
 'use client';
 import React, {useEffect, useState} from 'react';
 import Link from "next/link";
-import Image from "next/image";
 import {useUserStore} from "@/stores/userStore";
 import {User} from "@/types/Types";
-import {IconClock, IconLockFilled, IconMenu, IconMenu2, IconX} from "@tabler/icons-react";
+import { IconLockFilled, IconMenu2, IconX} from "@tabler/icons-react";
 import UserIcon from "@/components/navbar/UserIcon";
 import {AnimatePresence, motion} from 'framer-motion';
 

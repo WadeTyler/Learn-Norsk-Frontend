@@ -35,7 +35,7 @@ const UserIcon = ({isMobile = false}: {
   if (!isMobile) return (
     <div
       ref={userIconRef}
-      className="bg-background flex items-center w-fit h-fit rounded-full p-2 relative cursor-pointer text-primary hover:bg-accent hover:text-background duration-300"
+      className="bg-background flex items-center w-fit h-fit rounded-full p-2 relative cursor-pointer text-accent hover:bg-accent hover:text-background duration-300"
       onClick={() => setClicked(prev => !prev)}
     >
       <IconUserFilled />
