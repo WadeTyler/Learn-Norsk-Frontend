@@ -53,9 +53,12 @@ const DesktopNavbar = ({user}: {
 
   // Determine currentPage
   const pathname = usePathname();
-  const [currentPage, setCurrentPage] = useState(pathname.split("/")[1]);
+  const [currentPage, setCurrentPage] = useState("");
   useEffect(() => {
-    setCurrentPage(pathname.split("/")[1]);
+    if (pathname) {
+      setCurrentPage(pathname.split("/")[1]);
+    }
+
   }, [pathname]);
 
   const [isAtTop, setIsAtTop] = useState(true);
