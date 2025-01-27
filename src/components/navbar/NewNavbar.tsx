@@ -75,7 +75,7 @@ const DesktopNavbar = ({user}: {
   return (
     <div
       className={`fixed w-full h-16 text-white flex items-center justify-center z-50 duration-300 ${
-        currentPage === "" && isAtTop ? 'bg-transparent backdrop-blur shadow-none' : 'bg-[rgba(0,20,30,.7)] backdrop-blur shadow-lg'}
+        currentPage === "" && isAtTop ? 'bg-transparent shadow-none ' : 'bg-[rgba(0,20,30,.7)] shadow-lg backdrop-blur'}
       `}>
 
       <div className="w-full lg:w-[45rem] xl:w-[75rem] px-4 lg:p-0 flex items-center justify-between">
