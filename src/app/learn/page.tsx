@@ -63,17 +63,17 @@ const Page = () => {
 
   return (
     <div className="w-full bg-background min-h-screen pt-32 p-16 flex flex-col items-center">
-      <h1 className="text-primary font-semibold text-3xl">Welcome back, {user?.firstName}!</h1>
-      <h2 className="mt-2">{affirmation}</h2>
+      <h1 className="text-primary font-semibold text-xl md:text-3xl text-center">Welcome back, {user?.firstName}!</h1>
+      <h2 className="mt-2 w-full md:text-base text-sm text-center">{affirmation}</h2>
 
       <p className="mt-2 mb-1">Total Completion</p>
-      <div className="w-[35rem] h-4 rounded-full bg-white shadow-xl overflow-hidden">
+      <div className="w-64 sm:w-96 md:w-[35rem] h-4 rounded-full bg-white shadow-xl overflow-hidden">
         <div className="bg-accent h-full duration-300" style={{
           width: `${totalProgress}%`
         }} />
       </div>
 
-      <hr className="w-full border my-4"/>
+      <hr className="w-64 sm:w-96 md:w-full border my-4"/>
 
       {!loadCompletedLessonsError && sections && (
         <div className={"w-full flex flex-col gap-4 items-center"}>

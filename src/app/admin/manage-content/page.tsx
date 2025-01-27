@@ -23,7 +23,7 @@ const Page = () => {
     if (isCheckingAdmin) return <LoadingLG/>;
 
     return (
-        <div className="w-full min-h-screen flex flex-col items-center gap-16 p-16 pt-32">
+        <div className="w-full min-h-screen flex flex-col items-center gap-16 p-4 sm:p-8 md:p-16 md:pt-32">
             <h1 className="font-semibold text-2xl">Manage Sections</h1>
             <div className="w-full flex gap-8 justify-center flex-wrap">
                 <SearchSections/>

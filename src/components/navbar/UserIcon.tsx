@@ -5,7 +5,9 @@ import Link from "next/link";
 import {useUserStore} from "@/stores/userStore";
 import {LoadingSM} from "@/components/util/Loading";
 
-const UserIcon = () => {
+const UserIcon = ({isMobile = false}: {
+  isMobile?: boolean;
+}) => {
 
   const [clicked, setClicked] = useState<boolean>(false);
   const userIconRef = useRef<HTMLDivElement>(null);
@@ -30,7 +32,7 @@ const UserIcon = () => {
     setClicked(false);
   }
 
-  return (
+  if (!isMobile) return (
     <div
       ref={userIconRef}
       className="bg-background flex items-center w-fit h-fit rounded-full p-2 relative cursor-pointer text-primary hover:bg-accent hover:text-background duration-300"
@@ -47,6 +49,13 @@ const UserIcon = () => {
 
     </div>
   );
+
+  return (
+    <>
+      <Link href={"/profile"} className="text-background text-xl hover:scale-95 dursation-500 inline-flex items-center"><IconUser /> Profile</Link>
+      <button onClick={handleLogout} className="text-background text-sm hover:scale-95 duration-500 inline-flex items-center" disabled={isLoggingOut}>{!isLoggingOut ? <><IconLogout /> Logout</> : <LoadingSM /> }</button>
+    </>
+  )
 };
 
 export default UserIcon;

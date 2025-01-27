@@ -52,7 +52,7 @@ const ImageChoiceQuestion = ({question, nextQuestion}: {
       transition={{duration: .5, ease: "easeInOut"}}
       className="w-full h-full flex flex-col items-center gap-4 relative"
     >
-      <h1 className="text-primary text-2xl font-semibold inline-flex flex-col items-center">
+      <h1 className="text-primary text-xl sm:text-2xl font-semibold inline-flex flex-col items-center">
         <span>Select the Word For: </span>
         <span className="text-foreground">{question.title}</span>
       </h1>
@@ -87,7 +87,7 @@ const ImageChoiceQuestion = ({question, nextQuestion}: {
       <hr className={"w-full border"}/>
       <div className="w-full h-16">
         {isCorrect &&
-          <div className="flex items-center justify-between w-full bg-green-400 p-2 rounded max-h-16">
+          <div className="flex items-center justify-between w-full bg-green-400 p-2 rounded max-h-16 text-xs sm:text-base">
 
             <div>
               <p className="font-semibold">That&#39;s right!</p>
@@ -98,7 +98,7 @@ const ImageChoiceQuestion = ({question, nextQuestion}: {
           </div>
         }
         {isIncorrect && (
-          <div className="flex items-center justify-between w-full bg-red-400 p-2 rounded max-h-16">
+          <div className="flex items-center justify-between w-full bg-red-400 p-2 rounded max-h-16 text-xs sm:text-base">
             <div>
               <p className="font-semibold">Sorry, that was wrong!</p>
               <p className=""><strong>Correct Answer:</strong> {correctAnswer.norsk}</p>

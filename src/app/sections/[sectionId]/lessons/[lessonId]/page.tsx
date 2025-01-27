@@ -142,9 +142,9 @@ const Page = () => {
   if (!questions) return <DisplayError errorMessage={"Questions not found"} />
 
   return (
-    <div className="w-full h-screen pt-16 flex items-center justify-center flex-col">
+    <div className="w-full h-screen md:pt-16 md:p-0 p-4 flex items-center justify-center flex-col">
 
-      <div className="w-[40rem]">
+      <div className="w-full sm:w-[30rem] md:w-[40rem]">
         <button
           onClick={goBackToLearnPage}
           className="inline-flex items-center gap-1 text-lg text-accentLight hover:text-white hover:bg-accent p-1 duration-300 rounded hover:shadow-xl select-none"
@@ -153,7 +153,7 @@ const Page = () => {
         </button>
       </div>
       {/* Progress Bar */}
-      <div className="w-[40rem] rounded-full bg-white h-6 my-4 shadow-xl overflow-hidden">
+      <div className="w-full sm:w-[30rem] md:w-[40rem] rounded-full bg-white h-6 my-4 shadow-xl overflow-hidden">
         <div
           className={`h-full bg-accent duration-700`}
           style={{
@@ -166,7 +166,7 @@ const Page = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: .5 }}
-        className="w-[40rem] bg-white shadow-xl rounded h-[40rem] p-4"
+        className="w-full sm:w-[30rem] md:w-[40rem] bg-white shadow-xl rounded h-[40rem] p-4"
       >
         {currentQuestion &&
             <AnimatePresence initial={false}>

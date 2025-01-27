@@ -34,9 +34,9 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
       initial={{opacity: 0}}
       animate={{opacity: 1}}
       transition={{duration: .5}}
-      className="w-[35rem] bg-white rounded shadow-xl flex flex-col p-4">
+      className="w-64 sm:w-96 md:w-[35rem] bg-white rounded shadow-xl flex flex-col p-4">
       <h2
-        className="p-2 text-primary font-semibold text-lg flex justify-between items-center group cursor-pointer hover:text-accent duration-300"
+        className="p-2 text-primary font-semibold text-sm sm:text-lg flex justify-between items-center group cursor-pointer hover:text-accent duration-300"
         onClick={handleSectionClick}
       >
         <span className="inline-flex items-center gap-4">{section.sectionNumber} - {section.title}
@@ -61,7 +61,7 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
             transition={{duration: .5, ease: 'easeInOut'}}
             className="w-full overflow-hidden"
           >
-            <div className="flex flex-col gap-2 w-full">
+            <div className="flex flex-col gap-2 w-full text-sm sm:text-base">
               {section.lessons.map((lesson, index) => {
 
                 function getIsCompleted() {
@@ -86,7 +86,7 @@ const SectionPanel = ({section, currentSection, setCurrentSection}: {
                       </p>
                       {isCompleted && <IconCheck className="text-accent" />}
                     </div>
-                    <p className="text-sm group-hover:text-accent duration-300">{lesson.description}</p>
+                    <p className="text-xs sm:text-sm group-hover:text-accent duration-300">{lesson.description}</p>
                   </Link>
                 )
               })}
