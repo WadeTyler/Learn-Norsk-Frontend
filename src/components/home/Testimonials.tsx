@@ -1,5 +1,5 @@
 'use client';
-import {IconStarFilled} from '@tabler/icons-react';
+import Stars from '@/components/util/Stars';
 import React from 'react';
 import Image from "next/image";
 import CTA2 from "@/components/home/CTA2";
@@ -90,15 +90,3 @@ const Testimonials = () => {
 
 export default Testimonials;
 
-
-const Stars = () => {
-  return (
-    <div className="flex items-center gap-2 text-orange-400">
-      <IconStarFilled />
-      <IconStarFilled />
-      <IconStarFilled />
-      <IconStarFilled />
-      <IconStarFilled />
-    </div>
-  )
-}
