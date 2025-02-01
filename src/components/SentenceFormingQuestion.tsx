@@ -2,7 +2,9 @@
 import React, {useState} from 'react';
 import {Question, Word} from "@/types/Types";
 import WordButton from "@/components/WordButton";
-import { motion} from 'framer-motion';
+import {motion} from 'framer-motion';
+import titleWord from "@/components/TitleWord";
+import TitleWord from '@/components/TitleWord';
 
 const SentenceFormingQuestion = ({question, nextQuestion}: {
   question: Question;
@@ -48,8 +50,7 @@ const SentenceFormingQuestion = ({question, nextQuestion}: {
   const handleGoNext = () => {
     if (isCorrect && !isIncorrect) {
       nextQuestion(true, selectedAnswer);
-    }
-    else if (!isCorrect && isIncorrect) {
+    } else if (!isCorrect && isIncorrect) {
       nextQuestion(false, selectedAnswer);
     }
 
@@ -61,14 +62,19 @@ const SentenceFormingQuestion = ({question, nextQuestion}: {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: .5, ease: "easeInOut" }}
+      initial={{opacity: 0}}
+      animate={{opacity: 1}}
+      exit={{opacity: 0}}
+      transition={{duration: .5, ease: "easeInOut"}}
       className="w-full h-full flex flex-col items-center gap-4 relative ">
-      <h1 className="text-primary text-xl sm:text-2xl font-semibold inline-flex flex-col items-center">
+      <h1 className="text-primary text-xl sm:text-2xl font-semibold inline-flex flex-col items-center relative">
         <span>Form the Sentence: </span>
-        <span className="text-foreground ">{question.title}</span>
+
+        <span className="inline-flex items-center gap-1 text-background3 font-bold text-xl">
+          {question.titleWords?.map((word: Word | null, index: number) => (
+            <TitleWord word={word} key={index} index={index} titleString={question.title}/>
+          ))}
+        </span>
       </h1>
 
       <hr className={"w-full border"}/>
@@ -91,7 +97,7 @@ const SentenceFormingQuestion = ({question, nextQuestion}: {
 
       <hr className={"w-full border"}/>
       {(!isIncorrect && !isCorrect) &&
-          <button className={"submit-btn"} onClick={handleCheckAnswer}>Check Answer</button>
+        <button className={"submit-btn"} onClick={handleCheckAnswer}>Check Answer</button>
       }
 
       {isIncorrect && (

@@ -9,6 +9,7 @@ export interface Question {
   id: number;
   type: "image-choice" | "sentence-forming" | "sentence-typing";
   title: string;
+  titleWords?: Word[];
   options?: Word[];
   answer: Word[];
 }

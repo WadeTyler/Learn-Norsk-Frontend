@@ -126,6 +126,7 @@ export const useSectionStore = create<SectionStore>((set, get) => ({
       const queue = convertQuestionsToQueue(response.data);
       const firstQuestion = queue.dequeue();
 
+      console.log(response.data);
       set({
         currentQuestion: firstQuestion,
         questions: queue,

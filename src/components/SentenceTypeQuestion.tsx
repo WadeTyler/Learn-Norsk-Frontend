@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import {Question, Word} from "@/types/Types";
 import { motion } from 'framer-motion';
 import {norskLetters} from "@/constants/norsk-data";
+import TitleWord from "@/components/TitleWord";
 
 const SentenceTypeQuestion = ({question, nextQuestion}: {
   question: Question;
@@ -71,9 +72,13 @@ const SentenceTypeQuestion = ({question, nextQuestion}: {
       transition={{duration: .5, ease: "easeInOut"}}
       className="w-full h-full flex flex-col items-center gap-4 relative"
     >
-      <h1 className="text-primary text-xl sm:text-2xl font-semibold inline-flex flex-col items-center">
-        <span>How do you say: </span>
-        <span className="text-foreground">{question.title}</span>
+      <h1 className="text-xl sm:text-2xl font-semibold inline-flex flex-col items-center">
+        <span className="text-primary">How do you say: </span>
+        <span className="inline-flex items-center gap-1 flex-row">
+          {question.titleWords?.map((word: Word | null, index: number) => (
+          <TitleWord word={word} key={index} index={index} titleString={question.title} />
+        ))}
+        </span>
       </h1>
 
       <hr className={"w-full border"}/>
