@@ -56,3 +56,12 @@ export interface CompletedLesson {
   sectionId: number;
   lessonId: number;
 }
+
+
+export interface ChatMessage {
+  id: number;
+  userMessage: string;
+  aiMessage: string;
+  userId: string;
+  timestamp: string;
+}

@@ -41,7 +41,7 @@ input {
 }
 
 .input-bar {
-  @apply border border-zinc-400 rounded p-2 w-full focus:ring-primary bg-transparent focus:outline-primary focus:shadow-xl hover:shadow-xl duration-300 focus:font-semibold ;
+  @apply border border-zinc-400 rounded p-2 w-full focus:ring-primary bg-transparent focus:outline-primary focus:shadow-xl hover:shadow-xl duration-300 focus:font-semibold;
 }
 
 .input-label {
