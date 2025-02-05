@@ -45,7 +45,7 @@ const VisionAndMission = () => {
             <div className="flex flex-col gap-2">
               <IconCheck />
               <p className="font-bold text-xl">Our Vision</p>
-              <h4>To Become the leading platform for Norwegian language learning, inspiring global curiosity and appreciation for Norway's rich culture.</h4>
+              <h4>To Become the leading platform for Norwegian language learning, inspiring global curiosity and appreciation for Norway&#39;s rich culture.</h4>
             </div>
             <div className="flex flex-col gap-2">
               <IconCheck />

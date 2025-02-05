@@ -2,7 +2,6 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 import {useUserStore} from "@/stores/userStore";
-import {useAiStore} from "@/stores/aiStore";
 
 const ChatBubble = ({content, isAi}: {
   content: string;

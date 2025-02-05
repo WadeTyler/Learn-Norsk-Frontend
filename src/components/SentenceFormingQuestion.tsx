@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import {Question, Word} from "@/types/Types";
 import WordButton from "@/components/WordButton";
 import {motion} from 'framer-motion';
-import titleWord from "@/components/TitleWord";
 import TitleWord from '@/components/TitleWord';
 
 const SentenceFormingQuestion = ({question, nextQuestion}: {

@@ -44,16 +44,17 @@ const AnnaAiChat = ({setChatOpen}: {
       </div>
 
       {/* Header */}
-      <h5 className="text-2xl text-accent text-center font-semibold inline-flex flex-col gap-1">
-        Chat with Anna<br/>
+      <h5 className="text-2xl text-white text-center font-bold inline-flex flex-col gap-1">
+        Chat with Anna
+        <br/>
         <span className="text-sm text-white italic">Your AI Norwegian Assistant</span>
       </h5>
       <hr className="border w-full"/>
 
       {/* Chat Messages */}
       <div className="h-full w-full overflow-y-scroll overflow-x-hidden">
-        <ChatBubble content={`Hei ${user?.firstName || ""}! What can I help you with?`} isAi={true}/>
-        {currentMessages.map((message, index) => (
+        <ChatBubble content={`Hei ${user?.firstName || ""}! Hva kan jeg hjelpe deg med? (What can I help you with?)`} isAi={true}/>
+        {currentMessages.map((message) => (
           <div key={message.id}>
             <ChatBubble content={message.userMessage} isAi={false} />
             <ChatBubble content={message.aiMessage} isAi={true} />

@@ -45,7 +45,7 @@ const Hero = () => {
             className="max-w-[55rem]"
           >
             Our platform is your gateway to mastering the norwegian language, offering personalized and interactive
-            lessons for every learner's unique journey.
+            lessons for every learner&#39;s unique journey.
           </motion.h1>
 
           <button className="submit-btn3"

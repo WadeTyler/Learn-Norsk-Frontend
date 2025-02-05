@@ -29,6 +29,9 @@ export const useAiStore = create<AiStoreInterface>((set, get) => ({
       set({ currentMessages: messages, isSendingMessage: false })
     } catch (e) {
       set({ isSendingMessage: false });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      console.log("Error: ", e.response.data)
       toast.error("Something went wrong");
     }
   },
